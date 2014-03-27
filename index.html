@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
+    <link rel="stylesheet" href="style.css"></link>
+    <script>
+        var PM = {};
+        function init() {
+        	PM.getDoodleSize("#doodle");
+            PM.addBarLeft("#FFFF00");
+            PM.stage.update();
+        }
+
+        PM.getDoodleSize = function(canvas_id) {
+            PM.stage = new createjs.Stage(canvas_id);
+            PM.doodleWidth = $(canvas_id).css("width");
+            PM.doodleHeight = $(canvas_id).css("height");
+            console.log("size");
+        }
+
+        PM.addBarLeft = function(barcolor) {
+            var barLeft = new createjs.Shape();
+            barLeft.graphics.beginFill(barcolor).drawRect(0, 0, 15, 80);
+            PM.stage.addChild(barLeft);
+        }
+    </script>
+</head>
+<body onLoad="init();">
+    <canvas id="doodle" width="500" height="300">
+    </canvas>
+</body>
+</html>
