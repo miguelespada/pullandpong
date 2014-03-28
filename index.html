@@ -14,6 +14,8 @@
 
     PM.ballMoveX = 5;
     PM.ballMoveY = 5;
+    PM.ballXDir = 1;
+    PM.ballYDir = 1;
     PM.barMove = 10;
 
     PM.gameOver = false;
@@ -31,13 +33,14 @@
       PM.stage = new createjs.Stage(canvas_id);
       PM.doodleWidth = parseInt($("#" + canvas_id).css("width"));
       PM.doodleHeight = parseInt($("#" + canvas_id).css("height"));
+      PM.doodleYCenter = (PM.doodleHeight - PM.barHeight)/2;
     };
 
     PM.addBarLeft = function(barcolor) {
       PM.barLeft = new createjs.Shape();
       PM.barLeft.graphics.beginFill(barcolor)
                 .drawRect(0, 
-                          (PM.doodleHeight - PM.barHeight)/2, 
+                          PM.doodleYCenter, 
                           PM.barWidth, 
                           PM.barHeight)
                 .endFill();
@@ -48,7 +51,7 @@
       PM.barRight = new createjs.Shape();
       PM.barRight.graphics.beginFill(barcolor)
                           .drawRect(PM.doodleWidth, 
-                                    (PM.doodleHeight - PM.barHeight)/2, 
+                                    PM.doodleYCenter, 
                                     - PM.barWidth, 
                                     PM.barHeight)
                           .endFill();
@@ -98,91 +101,119 @@
       }
     };
 
-    PM.canMoveDown = function(){
-      return PM.barRight.y < (PM.doodleHeight - PM.barHeight)/2;
-    }
-
-    PM.moveDown = function(){
-      if(PM.canMoveDown){
+    PM.rightMoveDown = function(){
+      if(PM.barRight.y < (PM.doodleHeight - PM.barHeight)/2){
         PM.barLeft.y -= PM.barMove;
         PM.barRight.y += PM.barMove;
       }
     };
 
+    PM.rightMoveUp = function(){
+      if(PM.barRight.y > - (PM.doodleHeight - PM.barHeight)/2){
+        PM.barLeft.y += PM.barMove;
+        PM.barRight.y -= PM.barMove;
+      }
+    };
+
+    PM.leftMoveDown = function(){
+      if(PM.barLeft.y < (PM.doodleHeight - PM.barHeight)/2){
+        PM.barLeft.y += PM.barMove;
+        PM.barRight.y -= PM.barMove;
+      }
+    };
+
+    PM.leftMoveUp = function(){
+      if(PM.barLeft.y > - (PM.doodleHeight - PM.barHeight)/2){
+        PM.barLeft.y -= PM.barMove;
+        PM.barRight.y += PM.barMove;
+      }
+    };
+
+    PM.rightActivated = function() {
+      createjs.Tween.get(PM.barLeft).to({alpha:0.3}, 400);
+      createjs.Tween.get(PM.barRight).to({alpha:1}, 400);
+    };
+
+    PM.leftActivated = function() {
+      createjs.Tween.get(PM.barLeft).to({alpha:1}, 400);
+      createjs.Tween.get(PM.barRight).to({alpha:0.3}, 400);
+    }; 
+
+    PM.rightBarControl = function() {
+      PM.rightActivated();        
+      if (PM.up){
+        PM.rightMoveUp();
+      }
+      else if (PM.down){
+        PM.rightMoveDown();
+      }
+    };
+
+    PM.leftBarControl = function() {
+      PM.leftActivated();
+      if (PM.up){
+        PM.leftMoveUp();
+      }
+      else if (PM.down){
+        PM.leftMoveDown();
+      }
+    };
+
+    PM.initializeBallMove = function() {
+      PM.ball.x += PM.ballMoveX * PM.ballXDir;
+      PM.ball.y += PM.ballMoveY * PM.ballYDir;
+    };
+
+    PM.ballBounceEdge = function() {
+      if (PM.ball.y >= PM.doodleHeight - PM.ballDiameter/2 || PM.ball.y <= PM.ballDiameter/2){
+        PM.ballYDir = - PM.ballYDir;
+      }
+    };
+
+    PM.ballBounceRight = function(){
+      if (PM.ball.x >= PM.doodleWidth - PM.ballDiameter/2 - PM.barWidth){
+        if (PM.ball.y - PM.doodleHeight/2 >= PM.barRight.y - (PM.barHeight/2 + PM.ballDiameter/2)
+         && PM.ball.y - PM.doodleHeight/2 <= PM.barRight.y + (PM.barHeight/2 + PM.ballDiameter/2)
+         && !PM.gameOver) {
+          PM.ballXDir = - PM.ballXDir;
+        }
+        else {
+          PM.gameOver = true;
+        }             
+      }
+    };
+
+    PM.ballBounceLeft = function(){
+      if (PM.ball.x <= PM.ballDiameter/2 + PM.barWidth){
+        if (PM.ball.y - PM.doodleHeight/2 >= PM.barLeft.y - (PM.barHeight/2 + PM.ballDiameter/2)
+         && PM.ball.y - PM.doodleHeight/2 <= PM.barLeft.y + (PM.barHeight/2 + PM.ballDiameter/2)
+         && !PM.gameOver) {
+          PM.ballXDir = - PM.ballXDir;
+        }
+        else {
+          PM.gameOver = true;
+        }
+      }
+    }
+
     PM.tick = function() {
-      
-    //Handle movements of bars
+
+      PM.initializeBallMove();
+      PM.ballBounceEdge();
 
       //When the ball is moving to the right
-      if (PM.ballMoveX >= 0 && !PM.gameOver){
-        createjs.Tween.get(PM.barLeft).to({alpha:0.3}, 400);
-        createjs.Tween.get(PM.barRight).to({alpha:1}, 400);
-        
-        if (PM.up && PM.barRight.y > - (PM.doodleHeight - PM.barHeight)/2){
-          PM.barLeft.y += PM.barMove;
-          PM.barRight.y += - PM.barMove;
-        }
-        else if (PM.down){
-          PM.moveDown();
-        }
+      if (PM.ballXDir >= 0 && !PM.gameOver){
+        PM.rightBarControl();
+        PM.ballBounceRight();
       }
       //When the ball is moving to the left
-      if (PM.ballMoveX < 0 && !PM.gameOver){
-        createjs.Tween.get(PM.barLeft).to({alpha:1}, 400);
-        createjs.Tween.get(PM.barRight).to({alpha:0.3}, 400);
-        if (PM.up && PM.barLeft.y > - (PM.doodleHeight - PM.barHeight)/2){
-          PM.barLeft.y += - PM.barMove;
-          PM.barRight.y += PM.barMove;
-        }
-        else if (PM.down && PM.barLeft.y < (PM.doodleHeight - PM.barHeight)/2){
-          PM.barLeft.y += PM.barMove;
-          PM.barRight.y += - PM.barMove;
-        }
+      if (PM.ballXDir < 0 && !PM.gameOver){
+        PM.leftBarControl();
+        PM.ballBounceLeft();
       }
-
-    //Handle movements of the ball
-
-      PM.ball.x += PM.ballMoveX;
-      PM.ball.y += PM.ballMoveY;
-
-      //When the ball touches the up/bottom edge
-      if (PM.ball.y >= PM.doodleHeight - PM.ballDiameter/2 || PM.ball.y <= PM.ballDiameter/2){
-        PM.ballMoveY = - PM.ballMoveY;
-      }
-
-      //When the ball touches the bars
-
-        //When the ball is moving to the right
-        if (PM.ballMoveX >= 0){
-          if (PM.ball.x >= PM.doodleWidth - PM.ballDiameter/2 - PM.barWidth){
-            if (PM.ball.y - PM.doodleHeight/2 >= PM.barRight.y - (PM.barHeight/2 + PM.ballDiameter/2)
-             && PM.ball.y - PM.doodleHeight/2 <= PM.barRight.y + (PM.barHeight/2 + PM.ballDiameter/2)
-             && !PM.gameOver) {
-              PM.ballMoveX = - PM.ballMoveX;
-            }
-            else {
-              PM.gameOver = true;
-            }             
-          }
-        }
-        
-        //When the ball is moving to the left
-        if (PM.ballMoveX < 0){
-          if (PM.ball.x <= PM.ballDiameter/2 + PM.barWidth){
-            if (PM.ball.y - PM.doodleHeight/2 >= PM.barLeft.y - (PM.barHeight/2 + PM.ballDiameter/2)
-             && PM.ball.y - PM.doodleHeight/2 <= PM.barLeft.y + (PM.barHeight/2 + PM.ballDiameter/2)
-             && !PM.gameOver) {
-              PM.ballMoveX = - PM.ballMoveX;
-            }
-            else {
-              PM.gameOver = true;
-            }
-          }
-        }
 
     //Update the stage
       PM.stage.update();
-
     };
 
   </script>
