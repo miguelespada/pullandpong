@@ -176,7 +176,7 @@
          && PM.ball.y - PM.doodleHeight/2 <= PM.barRight.y + (PM.barHeight/2 + PM.ballDiameter/2)
          && !PM.gameOver) {
           PM.ballXDir = - PM.ballXDir;
-          PM.ballYDir = PM.ballYDir + ((PM.ball.y - PM.doodleHeight/2) - PM.barRight.y)/(PM.barHeight + PM.ballDiameter);
+          PM.ballYDir = PM.ballYDir + ((PM.ball.y - PM.doodleHeight/2) - PM.barRight.y)/(PM.barHeight + PM.ballDiameter) * 2;
         }
         else {
           PM.gameOver = true;
@@ -190,7 +190,7 @@
          && PM.ball.y - PM.doodleHeight/2 <= PM.barLeft.y + (PM.barHeight/2 + PM.ballDiameter/2)
          && !PM.gameOver) {
           PM.ballXDir = - PM.ballXDir;
-          PM.ballYDir = PM.ballYDir + ((PM.ball.y - PM.doodleHeight/2) - PM.barRight.y)/(PM.barHeight + PM.ballDiameter);
+          PM.ballYDir = PM.ballYDir + ((PM.ball.y - PM.doodleHeight/2) - PM.barLeft.y)/(PM.barHeight + PM.ballDiameter) * 2;
         }
         else {
           PM.gameOver = true;
