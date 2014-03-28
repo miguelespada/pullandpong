@@ -8,6 +8,8 @@
   <script>
     var PM = {};
 
+    PM.doodleId = "doodle";
+
     PM.barWidth = 15;
     PM.barHeight = 80;
     PM.ballDiameter = 30;
@@ -18,23 +20,27 @@
     PM.ballYDir = 1;
     PM.barMove = 10;
 
+    PM.touch = false;
+
     PM.angleFactor = 1.5;
 
     PM.gameOver = false;
 
     function init() {
-      PM.getDoodleSize("doodle");
+      PM.getDoodleSize();
       PM.addBarLeft("#FFFFFF");
       PM.addBarRight("#FFFFFF");
       PM.addBall("#FF0000");
 
+      PM.handleTouch();
+
       PM.makeThingsMove();
     }
 
-    PM.getDoodleSize = function(canvas_id) {
-      PM.stage = new createjs.Stage(canvas_id);
-      PM.doodleWidth = parseInt($("#" + canvas_id).css("width"));
-      PM.doodleHeight = parseInt($("#" + canvas_id).css("height"));
+    PM.getDoodleSize = function() {
+      PM.stage = new createjs.Stage(PM.doodleId);
+      PM.doodleWidth = parseInt($("#" + PM.doodleId).css("width"));
+      PM.doodleHeight = parseInt($("#" + PM.doodleId).css("height"));
       PM.doodleYCenter = (PM.doodleHeight - PM.barHeight)/2;
     };
 
@@ -102,6 +108,48 @@
         case 83: PM.down = false; break;
       }
     };
+
+    PM.handleTouch = function() {
+      createjs.Touch.enable(PM.stage);
+      PM.stage.on("stagemousedown", function(event){PM.mouseDown(event);});
+      PM.stage.on("stagemousemove", function(event){PM.mouseMove(event);});
+      PM.stage.on("stagemouseup", function(event){PM.mouseUp(event);});
+      document.addEventListener( 'mouseup', PM.mouseUp, false );
+    }
+
+    PM.mouseDown = function(event) {
+      PM.touchStart = event.stageY;
+      PM.touch = true;
+    }
+
+    PM.mouseMove = function(event) {
+      if (PM.touch){
+        if (event.stageY > PM.touchTrack){
+          PM.down = true;
+          PM.up = false;
+        }
+        else if (event.stageY < PM.touchTrack){
+          PM.up = true;
+          PM.down = false;
+        }
+        PM.touchTrack = event.stageY;
+  
+        if (event.stageY > PM.touchStart && event.stageY < PM.touchTrack){
+          PM.touchStart = PM.touchTrack;
+        }
+        else if (event.stageY < PM.touchStart && event.stageY > PM.touchTrack){
+          PM.touchStart = PM.touchTrack;
+        }
+      }
+    }
+
+    PM.mouseUp = function() {
+      PM.touchStart = 0;
+      PM.touchTrack = 0;
+      PM.up = false;
+      PM.down = false;
+      PM.touch = false;
+    }
 
     PM.rightMoveDown = function(){
       if(PM.barRight.y < (PM.doodleHeight - PM.barHeight)/2){
