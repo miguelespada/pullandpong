@@ -1,11 +1,12 @@
 var ball = new function(){
 
   this.radius = 15;
+
+  this.incX = 5;
+  this.incY = 5;
+  this.dirX = -1;
+  this.dirY = 1;
   this.angleFactor = 1.5;
-
-  this.vel = 5;
-  this.angle = - Math.PI/4 ;
-
 
   this.createShape = function(color) {
     this.shape = new createjs.Shape();
@@ -22,37 +23,29 @@ var ball = new function(){
   };
 
   this.bounceY = function(CANVAS) {
-    if ( (this.y >= CANVAS.height - this.radius && this.goingUp())
-      || (this.y <= this.radius && !this.goingUp()))
-      this.angle *= -1;
+    if ( (this.y >= CANVAS.height - this.radius && this.dirY == 1)
+      || (this.y <= this.radius && this.dirY == -1))
+      this.dirY *= -1;
   };
 
   this.bounce_left = function(bar){
     if ((this.x - this.radius) <= (bar.width) && 
         (this.y <= bar.y + bar.height && this.y >= bar.y)){
-      this.angle *= -1;
+      this.dirX *= -1;
     }
   };
 
   this.bounce_right = function(CANVAS){
     if ((this.x + this.radius) >= CANVAS.width)
-      this.angle += Math.PI / 2;
+      this.dirX *= -1;
   };
-
-  this.goingUp = function(){
-    return Math.sin(this.angle) > 0;
-  }
-  this.goingRight = function(){
-    return Math.cos(this.angle) > 0;
-  }
 
   this.bounce = function(CANVAS, bar_left) {
     this.bounceY(CANVAS);
-
-    if(this.goingRight())
-      this.bounce_right(CANVAS);
-    else
+    if(this.dirX == -1)
       this.bounce_left(bar_left);
+    else
+      this.bounce_right(CANVAS);
   };
 
   this.isOut = function(CANVAS){
@@ -67,8 +60,8 @@ var ball = new function(){
     // if(CANVAS.down) this.y += 1;
     // ...
 
-    this.x += Math.cos(this.angle) * this.vel;
-    this.y += Math.sin(this.angle) * this.vel;
+    this.x += this.incX * this.dirX;
+    this.y += this.incY * this.dirY;
 
     if(this.isOut(CANVAS)){
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
