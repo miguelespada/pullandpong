@@ -1,5 +1,7 @@
 var CANVAS = {};
 
+CANVAS.up = false;
+CANVAS.down = false;
 
 CANVAS.createStage = function(){
   this.stage = new createjs.Stage(this.id);

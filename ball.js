@@ -2,7 +2,7 @@ var ball = {};
 
 ball.radius = 15;
 
-ball.incX = 5;
+ball.incX = 0;
 ball.incY = 5;
 ball.dirX = 1;
 ball.dirY = 1;
@@ -22,9 +22,18 @@ ball.init = function(color) {
   this.createShape(color);
 };
 
-ball.move = function(){
+ball.bounce = function(CANVAS) {
+  if ( (this.y >= CANVAS.height - this.radius && this.dirY == 1)
+    || (this.y <= this.radius && this.dirY == -1))
+    this.dirY *= -1;
+};
+
+
+ball.update = function(CANVAS){
   this.x += this.incX * this.dirX;
   this.y += this.incY * this.dirY;
+
+  this.bounce(CANVAS);
 };
 
 ball.draw = function(){
@@ -32,10 +41,5 @@ ball.draw = function(){
   this.shape.y = this.y;
 };
 
-ball.boundceEdge = function() {
-  if (this.y >= CANVAS.height - this.radius || 
-      this.y <= this.radius){
-    this.dirY *= -1;
-  }
-};
+
 

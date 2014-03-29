@@ -25,3 +25,160 @@
         }
       }
     }
+
+
+     handleTouch = function() {
+      createjs.Touch.enable(PM.stage);
+      PM.stage.on("stagemousedown", function(event){PM.mouseDown(event);});
+      PM.stage.on("stagemousemove", function(event){PM.mouseMove(event);});
+      PM.stage.on("stagemouseup", function(event){PM.mouseUp(event);});
+      document.addEventListener( 'mouseup', PM.mouseUp, false );
+    }
+
+    PM.mouseDown = function(event) {
+      PM.touchStart = event.stageY;
+      PM.touch = true;
+    }
+
+    PM.mouseMove = function(event) {
+      if (PM.touch){
+        if (event.stageY > PM.touchTrack){
+          PM.down = true;
+          PM.up = false;
+        }
+        else if (event.stageY < PM.touchTrack){
+          PM.up = true;
+          PM.down = false;
+        }
+        PM.touchTrack = event.stageY;
+  
+        if (event.stageY > PM.touchStart && event.stageY < PM.touchTrack){
+          PM.touchStart = PM.touchTrack;
+        }
+        else if (event.stageY < PM.touchStart && event.stageY > PM.touchTrack){
+          PM.touchStart = PM.touchTrack;
+        }
+      }
+    }
+
+    PM.mouseUp = function() {
+      PM.touchStart = 0;
+      PM.touchTrack = 0;
+      PM.up = false;
+      PM.down = false;
+      PM.touch = false;
+    }
+
+
+
+    makeThingsMove = function() {
+      document.onkeydown = handleKeyDown;
+      document.onkeyup = handleKeyUp;
+
+      createjs.Ticker.setFPS(30);
+      createjs.Ticker.addEventListener("tick", PM.stage);
+      createjs.Ticker.addEventListener("tick", PM.tick);
+    };
+
+    handleKeyDown = function(event) {
+      if (!event) {
+        var event = window.event;
+      }
+      switch(event.keyCode) {
+        case 38: 
+        case 87: PM.up = true; break;
+
+        case 40: 
+        case 83: PM.down = true; break;
+      }
+    };
+
+    handleKeyUp = function(event) {
+      if (!event) {
+        var event = window.event;
+      }
+      switch(event.keyCode) {
+        case 38: 
+        case 87: PM.up = false; break;
+
+        case 40: 
+        case 83: PM.down = false; break;
+      }
+    };
+
+   
+
+    PM.rightMoveDown = function(){
+      if(PM.barRight.y < (PM.doodleHeight - PM.barHeight)/2){
+        PM.barLeft.y -= PM.barMove;
+        PM.barRight.y += PM.barMove;
+      }
+    };
+
+    PM.rightMoveUp = function(){
+      if(PM.barRight.y > - (PM.doodleHeight - PM.barHeight)/2){
+        PM.barLeft.y += PM.barMove;
+        PM.barRight.y -= PM.barMove;
+      }
+    };
+
+    PM.leftMoveDown = function(){
+      if(PM.barLeft.y < (PM.doodleHeight - PM.barHeight)/2){
+        PM.barLeft.y += PM.barMove;
+        PM.barRight.y -= PM.barMove;
+      }
+    };
+
+    PM.leftMoveUp = function(){
+      if(PM.barLeft.y > - (PM.doodleHeight - PM.barHeight)/2){
+        PM.barLeft.y -= PM.barMove;
+        PM.barRight.y += PM.barMove;
+      }
+    };
+
+    PM.rightActivated = function() {
+      createjs.Tween.get(PM.barLeft).to({alpha:0.3}, 400);
+      createjs.Tween.get(PM.barRight).to({alpha:1}, 400);
+    };
+
+    PM.leftActivated = function() {
+      createjs.Tween.get(PM.barLeft).to({alpha:1}, 400);
+      createjs.Tween.get(PM.barRight).to({alpha:0.3}, 400);
+    }; 
+
+    PM.rightBarControl = function() {
+      PM.rightActivated();        
+      if (PM.up){
+        PM.rightMoveUp();
+      }
+      else if (PM.down){
+        PM.rightMoveDown();
+      }
+    };
+
+    PM.leftBarControl = function() {
+      PM.leftActivated();
+      if (PM.up){
+        PM.leftMoveUp();
+      }
+      else if (PM.down){
+        PM.leftMoveDown();
+      }
+    };
+
+
+  PM.handleTouch();
+  makeThingsMove();
+
+
+
+  //When the ball is moving to the right
+  if (PM.ballXDir >= 0 && !PM.gameOver){
+    PM.rightBarControl();
+    PM.ballBounceRight();
+  }
+  //When the ball is moving to the left
+  if (PM.ballXDir < 0 && !PM.gameOver){
+    PM.leftBarControl();
+    PM.ballBounceLeft();
+  }

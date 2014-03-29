@@ -6,29 +6,34 @@
   <script src="http://code.createjs.com/tweenjs-0.5.1.min.js"></script>
   <script src="ball.js"></script>
   <script src="canvas.js"></script>
+  <script src="events.js"></script>
   <link rel="stylesheet" href="style.css"></link>
   <script>
   
-  var tick = function() {
-
-    ball.move();
-    ball.draw();  
-    CANVAS.update();
-
-  };
-
   var init = function() {
       CANVAS.init("doodle");
       ball.init("#FF0000");
       CANVAS.addShape(ball.shape);
       ball.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
-
-      createjs.Ticker.setFPS(30);
-      createjs.Ticker.addEventListener("tick", tick);
   }
 
+  var tick = function() {
+    ball.update(CANVAS);
+    ball.draw();  
+    CANVAS.update();
+  };
+
+  var addCallbacks = function(){
+    document.onkeydown = handleKeyDown;
+    document.onkeyup = handleKeyUp;
+
+    createjs.Ticker.setFPS(30);
+    createjs.Ticker.addEventListener("tick", tick);
+  };
+
   init();
-  
+  addCallbacks();
+
 
 
 </script>
