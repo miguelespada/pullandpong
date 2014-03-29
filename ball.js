@@ -28,10 +28,20 @@ var ball = new function(){
       this.dirY *= -1;
   };
 
+  this.offset = function(bar){
+    return this.y - bar.y
+  }
+
+  this.normalizedOffset = function(bar){
+    return (this.offset(bar) - bar.height /2) / (bar.height/2);
+  }
+
   this.bounce_left = function(bar){
     if ((this.x - this.radius) <= (bar.width) && 
-        (this.y <= bar.y + bar.height && this.y >= bar.y)){
+        (this.offset(bar) >= 0 && this.offset(bar) <= bar.height)){
       this.dirX *= -1;
+      
+      console.log(this.normalizedOffset(bar));
     }
   };
 
@@ -74,5 +84,4 @@ var ball = new function(){
     this.shape.x = this.x;
     this.shape.y = this.y;
   };
-
 };
