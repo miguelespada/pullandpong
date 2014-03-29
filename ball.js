@@ -4,7 +4,7 @@ var ball = new function(){
 
   this.incX = 5;
   this.incY = 5;
-  this.dirX = -1;
+  this.dirX = 1;
   this.dirY = 0;
   this.angleFactor = 2;
 
@@ -46,24 +46,31 @@ var ball = new function(){
     }
   };
 
-  this.bounce_right = function(CANVAS){
-    if ((this.x + this.radius) >= CANVAS.width)
+
+  this.bounce_right = function(CANVAS, bar){
+
+    if ((this.x + this.radius) >= (CANVAS.width - bar.width) && 
+        (this.offset(bar) >= 0 && this.offset(bar) <= bar.height)){
       this.dirX *= -1;
+      this.dirY = this.normalizedOffset(bar) * this.angleFactor;
+    }
   };
 
-  this.bounce = function(CANVAS, bar_left) {
+
+
+  this.bounce = function(CANVAS, left_bar, right_bar) {
     this.bounceY(CANVAS);
     if(this.dirX == -1)
-      this.bounce_left(bar_left);
+      this.bounce_left(left_bar);
     else
-      this.bounce_right(CANVAS);
+      this.bounce_right(CANVAS, right_bar);
   };
 
   this.isOut = function(CANVAS){
-    return this.x <= 0;
+    return this.x <= 0 || (this.x - this.radius) > CANVAS.width ;
   };
 
-  this.update = function(CANVAS, bar_left){
+  this.update = function(CANVAS, left_bar, right_bar){
     // Debuggin keys
     // if(CANVAS.dLeft) this.x += 5;
     // if(CANVAS.dRight) this.x -= 5;
@@ -71,14 +78,14 @@ var ball = new function(){
     // if(CANVAS.dDown) this.y += 5;
     // ...
 
-   this.x += this.incX * this.dirX;
-   this.y += this.incY * this.dirY;
+    this.x += this.incX * this.dirX;
+    this.y += this.incY * this.dirY;
 
     if(this.isOut(CANVAS)){
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
     }
 
-    this.bounce(CANVAS, bar_left);
+    this.bounce(CANVAS, left_bar, right_bar);
   };
 
   this.draw = function(){
