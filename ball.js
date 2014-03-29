@@ -40,8 +40,6 @@ var ball = new function(){
     if ((this.x - this.radius) <= (bar.width) && 
         (this.offset(bar) >= 0 && this.offset(bar) <= bar.height)){
       this.dirX *= -1;
-      
-      console.log(this.normalizedOffset(bar));
     }
   };
 
@@ -64,14 +62,14 @@ var ball = new function(){
 
   this.update = function(CANVAS, bar_left){
     // Debuggin keys
-    // if(CANVAS.left) this.x += 1;
-    // if(CANVAS.right) this.x -= 1;
-    // if(CANVAS.up) this.y -= 1;
-    // if(CANVAS.down) this.y += 1;
+    // if(CANVAS.dLeft) this.x += 5;
+    // if(CANVAS.dRight) this.x -= 5;
+    // if(CANVAS.dUp) this.y -= 5;
+    // if(CANVAS.dDown) this.y += 5;
     // ...
 
-    this.x += this.incX * this.dirX;
-    this.y += this.incY * this.dirY;
+   this.x += this.incX * this.dirX;
+   this.y += this.incY * this.dirY;
 
     if(this.isOut(CANVAS)){
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
