@@ -12,39 +12,41 @@
   <script>
   
   var init = function() {
-      CANVAS.init("doodle");
+    CANVAS.init("doodle");
 
-      ball.init("#FF0000");
-      CANVAS.addShape(ball.shape);
-      ball.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
+    ball.init("#FF0000");
+    CANVAS.addShape(ball.shape);
+    ball.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
 
-      left_bar = new bar();
-      left_bar.init("#FF0000", 1);
-      CANVAS.addShape(left_bar.shape);
-      left_bar.setInitialPosition(0, CANVAS.height/2 - left_bar.height / 2);
+    left_bar = new bar();
+    left_bar.init("#FF0000", 1);
+    CANVAS.addShape(left_bar.shape);
+    left_bar.setInitialPosition(0, CANVAS.height/2 - left_bar.height / 2);
 
-      right_bar = new bar();
-      right_bar.init("#FF0000", -1);
-      CANVAS.addShape(right_bar.shape);
+    right_bar = new bar();
+    right_bar.init("#FF0000", -1);
+    CANVAS.addShape(right_bar.shape);
+    right_bar.setInitialPosition(CANVAS.width - right_bar.width, 
+                                CANVAS.height/2  - right_bar.height / 2);
 
-      right_bar.setInitialPosition(CANVAS.width - right_bar.width, CANVAS.height/2  - right_bar.height / 2);
-
+    CANVAS.record = 10;
+    CANVAS.score = 0;
   }
 
   var tick = function() {
-    
     left_bar.update(CANVAS);
     left_bar.draw();
-
 
     right_bar.update(CANVAS);
     right_bar.draw();
 
     ball.update(CANVAS, left_bar, right_bar);
     ball.draw();  
-
+    $('#score').val(CANVAS.score);
+    $('#record').val(CANVAS.record);
     CANVAS.update();
   };
+
 
   var addCallbacks = function(){
     document.onkeydown = handleKeyDown;
@@ -54,11 +56,14 @@
     createjs.Ticker.addEventListener("tick", tick);
   };
 
+
   init();
   addCallbacks();
 </script>
 </head>
 <body onLoad="init();">
   <canvas id="doodle" width="500" height="300"></canvas>
+  <div><span>Record:</span><span id ="record">10</span></div> 
+  <div><span>Score:</span><span id ="score">0</span></div> 
 </body>
 </html>

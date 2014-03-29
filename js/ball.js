@@ -2,20 +2,26 @@ var ball = new function(){
 
   this.radius = 15;
 
-  this.incX = 5;
-  this.incY = 5;
-  this.dirX = -1;
-  this.dirY = -1;
   this.angleFactor = 2;
+  this.acc = 1.1;
 
   this.createShape = function(color) {
     this.shape = new createjs.Shape();
     this.shape.graphics.beginFill(color).drawCircle(0, 0, this.radius);
   };  
 
+  this.setInitialSpeed = function(){
+    this.incX = 5;
+    this.incY = 5;
+    this.dirX = -1;
+    this.dirY = -1;
+  };
+
   this.setInitialPosition = function(x, y){
     this.x = x;
     this.y = y;
+    this.setInitialSpeed();
+
   };
 
   this.init = function(color) { 
@@ -37,26 +43,32 @@ var ball = new function(){
     return (this.offset(bar) - bar.height /2) / (bar.height/2);
   }
 
-  this.bounce_left = function(bar){
+  this.hit = function(CANVAS, bar){
+    this.dirX *= -1;
+    this.dirY = this.normalizedOffset(bar) * this.angleFactor;
+    CANVAS.score += 1;
+    this.incX *= this.acc;
+    console.log(CANVAS.score);
+  };
+
+  this.bounce_left = function(CANVAS, bar){
     if ((this.x - this.radius) <= (bar.width) && 
         (this.offset(bar) >= 0 && this.offset(bar) <= bar.height)){
-      this.dirX *= -1;
-      this.dirY = this.normalizedOffset(bar) * this.angleFactor;
+      this.hit(CANVAS, bar);
     }
   };
 
   this.bounce_right = function(CANVAS, bar){
     if ((this.x + this.radius) >= (CANVAS.width - bar.width) && 
         (this.offset(bar) >= 0 && this.offset(bar) <= bar.height)){
-      this.dirX *= -1;
-      this.dirY = this.normalizedOffset(bar) * this.angleFactor;
+      this.hit(CANVAS, bar);
     }
   };
 
   this.bounce = function(CANVAS, left_bar, right_bar) {
     this.bounceY(CANVAS);
     if(this.dirX == -1)
-      this.bounce_left(left_bar);
+      this.bounce_left(CANVAS, left_bar);
     else
       this.bounce_right(CANVAS, right_bar);
   };
@@ -78,6 +90,8 @@ var ball = new function(){
 
     if(this.isOut(CANVAS)){
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
+      if(CANVAS.record < CANVAS.score) CANVAS.record = CANVAS.score;
+      CANVAS.score = 0;
     }
     this.bounce(CANVAS, left_bar, right_bar);
   };
