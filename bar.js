@@ -16,13 +16,17 @@ function bar(){
     this.y = y;
    };
 
-   this.move = function(dir){
+  this.move = function(CANVAS, dir){
     this.y += this.incY * dir;
+    
+    //rollback if out of borders
+    if(this.y > (CANVAS.height - this.height) || this.y < 0)
+      this.y -= this.incY * dir;
    };
 
    this.update = function(CANVAS){
-      if (CANVAS.up) this.move(-1);
-      if (CANVAS.down) this.move(1);
+      if (CANVAS.up) this.move(CANVAS, -1);
+      if (CANVAS.down) this.move(CANVAS, 1);
    };
 
    this.draw = function(){
