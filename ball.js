@@ -5,8 +5,8 @@ var ball = new function(){
   this.incX = 5;
   this.incY = 5;
   this.dirX = -1;
-  this.dirY = 1;
-  this.angleFactor = 1.5;
+  this.dirY = 0;
+  this.angleFactor = 2;
 
   this.createShape = function(color) {
     this.shape = new createjs.Shape();
@@ -23,9 +23,11 @@ var ball = new function(){
   };
 
   this.bounceY = function(CANVAS) {
-    if ( (this.y >= CANVAS.height - this.radius && this.dirY == 1)
-      || (this.y <= this.radius && this.dirY == -1))
+    if ( (this.y + this.radius >= CANVAS.height && this.dirY >= 0)
+      || (this.y - this.radius <= 0 && this.dirY < 0)){
       this.dirY *= -1;
+    }
+
   };
 
   this.offset = function(bar){
@@ -40,6 +42,7 @@ var ball = new function(){
     if ((this.x - this.radius) <= (bar.width) && 
         (this.offset(bar) >= 0 && this.offset(bar) <= bar.height)){
       this.dirX *= -1;
+      this.dirY = this.normalizedOffset(bar) * angleFactor;
     }
   };
 
