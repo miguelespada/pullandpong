@@ -24,5 +24,9 @@ var CANVAS = new function(){
   this.addShape = function(shape){
     this.stage.addChild(shape);
   };
+
+  this.removeShape = function(shape){
+    this.stage.removeChild(shape);
+  };
 };
 

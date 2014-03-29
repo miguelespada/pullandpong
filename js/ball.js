@@ -1,10 +1,13 @@
+var traceLen = 30;
+
 var ball = new function(){
 
   this.trace = new Array();
-  this.radius = 10;
+  this.radius = 8;
 
   this.angleFactor = 2;
   this.acc = 1.1;
+
 
   this.createShape = function(color) {
     this.color = color;
@@ -24,7 +27,8 @@ var ball = new function(){
     this.incY = 5;
     this.dirX = -1;
     this.randomDirectionY();
-    this.trace = new Array();
+
+
   };
 
   this.setInitialPosition = function(x, y){
@@ -100,14 +104,21 @@ var ball = new function(){
   };
 
   this.pushTrace = function(x, y){
-    if(this.trace.length > 5) 
-      this.trace.shift();
-    //this.trace.push({x : this.x, y : this.y});
+    var circle = new createjs.Shape();
+    circle = new createjs.Shape();
+    circle.graphics.beginFill(this.color).drawCircle(x, y, this.radius);
+    this.trace.push(circle);
   };
 
   this.drawTrace = function(CANVAS){
-    // for(var i = 0; i < this.trace.length; i ++){
-    // }
+    for(var i = 0; i < this.trace.length; i ++){
+      this.trace[i].alpha = 1/(this.trace.length - i) * 0.75;
+      CANVAS.addShape(this.trace[i]);
+    }
+    if(this.trace.length > traceLen){
+      CANVAS.removeShape(this.trace[0]);
+      this.trace.shift();
+    };
   };
 
   this.update = function(CANVAS, left_bar, right_bar){
@@ -129,6 +140,10 @@ var ball = new function(){
 
       left_bar.setActive(true);
       right_bar.setActive(false);
+
+      for(var i = 0; i < this.trace.length; i ++){
+        CANVAS.removeShape(this.trace[i]);
+      }
     }
     this.bounce(CANVAS, left_bar, right_bar);
   };
