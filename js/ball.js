@@ -1,11 +1,13 @@
 var ball = new function(){
 
+  this.trace = new Array();
   this.radius = 10;
 
   this.angleFactor = 2;
   this.acc = 1.1;
 
   this.createShape = function(color) {
+    this.color = color;
     this.shape = new createjs.Shape();
     this.shape.graphics.beginFill(color).drawCircle(0, 0, this.radius);
   };  
@@ -22,6 +24,7 @@ var ball = new function(){
     this.incY = 5;
     this.dirX = -1;
     this.randomDirectionY();
+    this.trace = new Array();
   };
 
   this.setInitialPosition = function(x, y){
@@ -96,6 +99,17 @@ var ball = new function(){
     return this.x <= 0 || (this.x - this.radius) > CANVAS.width ;
   };
 
+  this.pushTrace = function(x, y){
+    if(this.trace.length > 5) 
+      this.trace.shift();
+    //this.trace.push({x : this.x, y : this.y});
+  };
+
+  this.drawTrace = function(CANVAS){
+    // for(var i = 0; i < this.trace.length; i ++){
+    // }
+  };
+
   this.update = function(CANVAS, left_bar, right_bar){
     // Debuggin keys
     // if(CANVAS.dLeft) this.x += 5;
@@ -103,6 +117,7 @@ var ball = new function(){
     // if(CANVAS.dUp) this.y -= 5;
     // if(CANVAS.dDown) this.y += 5;
     // ...
+    this.pushTrace(this.x, this.y);
 
     this.x += this.incX * this.dirX;
     this.y += this.incY * this.dirY;
@@ -121,5 +136,6 @@ var ball = new function(){
   this.draw = function(){
     this.shape.x = this.x;
     this.shape.y = this.y;
+    this.drawTrace(CANVAS);
   };
 };
