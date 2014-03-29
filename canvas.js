@@ -1,27 +1,28 @@
-var CANVAS = {};
+var CANVAS = new function(){
+  this.up = false;
+  this.down = false;
 
-CANVAS.up = false;
-CANVAS.down = false;
+  this.createStage = function(){
+    this.stage = new createjs.Stage(this.id);
+  }
 
-CANVAS.createStage = function(){
-  this.stage = new createjs.Stage(this.id);
-}
+  this.getSize = function() {
+    this.width = parseInt($("#" + this.id).css("width"));
+    this.height = parseInt($("#" + this.id).css("height"));
+  };
 
-CANVAS.getSize = function() {
-  this.width = parseInt($("#" + this.id).css("width"));
-  this.height = parseInt($("#" + this.id).css("height"));
+  this.init = function(name){
+    this.id = name;
+    this.createStage();
+    this.getSize();
+  };
+
+  this.update = function(){
+    this.stage.update();
+  };
+
+  this.addShape = function(shape){
+    this.stage.addChild(shape);
+  };
 };
 
-CANVAS.init = function(name){
-  this.id = name;
-  this.createStage();
-  this.getSize();
-};
-
-CANVAS.update = function(){
-  this.stage.update();
-};
-
-CANVAS.addShape = function(shape){
-  this.stage.addChild(shape);
-};
