@@ -10,11 +10,18 @@ var ball = new function(){
     this.shape.graphics.beginFill(color).drawCircle(0, 0, this.radius);
   };  
 
+  this.randomDirectionY = function(){
+    if(Math.random() < 0.5)
+      this.dirY = -1;
+    else
+      this.dirY = 1;
+  };
+
   this.setInitialSpeed = function(){
     this.incX = 5;
     this.incY = 5;
     this.dirX = -1;
-    this.dirY = -1;
+    this.randomDirectionY();
   };
 
   this.setInitialPosition = function(x, y){
@@ -48,7 +55,6 @@ var ball = new function(){
     this.dirY = this.normalizedOffset(bar) * this.angleFactor;
     CANVAS.score += 1;
     this.incX *= this.acc;
-    console.log(CANVAS.score);
   };
 
   this.bounce_left = function(CANVAS, bar){
