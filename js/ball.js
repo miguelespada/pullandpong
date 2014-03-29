@@ -27,8 +27,6 @@ var ball = new function(){
     this.incY = 5;
     this.dirX = -1;
     this.randomDirectionY();
-
-
   };
 
   this.setInitialPosition = function(x, y){
@@ -121,6 +119,12 @@ var ball = new function(){
     };
   };
 
+  this.emptyTrace = function(CANVAS){
+    for(var i = 0; i < this.trace.length; i ++){
+      CANVAS.removeShape(this.trace[i]);
+    }
+    this.trace = new Array();
+  }
   this.update = function(CANVAS, left_bar, right_bar){
     // Debuggin keys
     // if(CANVAS.dLeft) this.x += 5;
@@ -135,15 +139,14 @@ var ball = new function(){
 
     if(this.isOut(CANVAS)){
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
+      
       if(CANVAS.record < CANVAS.score) CANVAS.record = CANVAS.score;
       CANVAS.score = 0;
 
       left_bar.setActive(true);
       right_bar.setActive(false);
 
-      for(var i = 0; i < this.trace.length; i ++){
-        CANVAS.removeShape(this.trace[i]);
-      }
+      this.emptyTrace(CANVAS);
     }
     this.bounce(CANVAS, left_bar, right_bar);
   };
