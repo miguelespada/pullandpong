@@ -1,4 +1,4 @@
- handleTouch = function() {
+   handleTouch = function() {
       createjs.Touch.enable(PM.stage);
       PM.stage.on("stagemousedown", function(event){PM.mouseDown(event);});
       PM.stage.on("stagemousemove", function(event){PM.mouseMove(event);});
@@ -40,8 +40,3 @@
       PM.touch = false;
     }
 
-  PM.touch = false;
-
-  PM.gameOver = false;
-  
-  PM.handleTouch();
