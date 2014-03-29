@@ -28,14 +28,14 @@ ball.move = function(){
 };
 
 ball.draw = function(){
-  ball.shape.x = ball.x;
-  ball.shape.y = ball.y;
+  this.shape.x = this.x;
+  this.shape.y = this.y;
 };
 
 ball.boundceEdge = function() {
-  if (ball.y >= CANVAS.height - ball.radius || 
-      ball.y <= ball.radius){
-    ball.dirY *= -1;
+  if (this.y >= CANVAS.height - this.radius || 
+      this.y <= this.radius){
+    this.dirY *= -1;
   }
 };
 

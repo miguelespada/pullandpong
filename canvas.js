@@ -2,29 +2,24 @@ var CANVAS = {};
 
 
 CANVAS.createStage = function(){
-  CANVAS.stage = new createjs.Stage(CANVAS.id);
+  this.stage = new createjs.Stage(this.id);
 }
 
 CANVAS.getSize = function() {
-  CANVAS.width = parseInt($("#" + CANVAS.id).css("width"));
-  CANVAS.height = parseInt($("#" + CANVAS.id).css("height"));
+  this.width = parseInt($("#" + this.id).css("width"));
+  this.height = parseInt($("#" + this.id).css("height"));
 };
 
-CANVAS.setStagePosition = function(){
-  //PM.doodleYCenter = (PM.doodleHeight - PM.barHeight)/2;
-}
-
-
-CANVAS.init = function(){
-  CANVAS.id = "doodle";
-  CANVAS.createStage();
-  CANVAS.getSize();
-}
+CANVAS.init = function(name){
+  this.id = name;
+  this.createStage();
+  this.getSize();
+};
 
 CANVAS.update = function(){
-  CANVAS.stage.update();
-}
+  this.stage.update();
+};
 
 CANVAS.addShape = function(shape){
-  CANVAS.stage.addChild(shape);
-}
+  this.stage.addChild(shape);
+};
