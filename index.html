@@ -33,6 +33,11 @@
     CANVAS.score = 0;
   }
 
+  var setScore = function(){
+    $('#score').text(CANVAS.score);
+    $('#record').text(CANVAS.record);
+  }
+
   var tick = function() {
     left_bar.update(CANVAS);
     left_bar.draw();
@@ -42,9 +47,9 @@
 
     ball.update(CANVAS, left_bar, right_bar);
     ball.draw();  
-    $('#score').val(CANVAS.score);
-    $('#record').val(CANVAS.record);
+
     CANVAS.update();
+    setScore();
   };
 
 
@@ -63,7 +68,7 @@
 </head>
 <body onLoad="init();">
   <canvas id="doodle" width="500" height="300"></canvas>
-  <div><span>Record:</span><span id ="record">10</span></div> 
-  <div><span>Score:</span><span id ="score">0</span></div> 
+  <div><span>Record:</span><span id ="record"></span></div> 
+  <div><span>Score:</span><span id ="score"></span></div> 
 </body>
 </html>
