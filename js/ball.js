@@ -6,7 +6,7 @@ var ball = new function(){
 
   this.angleFactor = 2;
   this.acc = 1.1;
-
+  this.trace = new Array();
 
   this.createShape = function(color) {
     this.color = color;
@@ -26,7 +26,6 @@ var ball = new function(){
     this.incY = 5;
     this.dirX = -1;
     this.randomDirectionY();
-    this.trace = new Array();
   };
 
   this.setInitialPosition = function(x, y){
@@ -123,8 +122,9 @@ var ball = new function(){
     for(var i = 0; i < this.trace.length; i ++){
       CANVAS.removeShape(this.trace[i]);
     }
+    this.trace = new Array();
   }
-  
+
   this.update = function(CANVAS, left_bar, right_bar){
     // Debuggin keys
     // if(CANVAS.dLeft) this.x += 5;
