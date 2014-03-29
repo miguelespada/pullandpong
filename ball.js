@@ -75,6 +75,4 @@ var ball = new function(){
     this.shape.y = this.y;
   };
 
-
-
 };
