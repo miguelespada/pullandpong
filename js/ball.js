@@ -61,22 +61,35 @@ var ball = new function(){
     if ((this.x - this.radius) <= (bar.width) && 
         (this.offset(bar) >= 0 && this.offset(bar) <= bar.height)){
       this.hit(CANVAS, bar);
+      return true;
     }
+    return false;
   };
 
   this.bounce_right = function(CANVAS, bar){
     if ((this.x + this.radius) >= (CANVAS.width - bar.width) && 
         (this.offset(bar) >= 0 && this.offset(bar) <= bar.height)){
       this.hit(CANVAS, bar);
+      return true;
     }
+    return false
   };
 
   this.bounce = function(CANVAS, left_bar, right_bar) {
     this.bounceY(CANVAS);
-    if(this.dirX == -1)
-      this.bounce_left(CANVAS, left_bar);
-    else
-      this.bounce_right(CANVAS, right_bar);
+    if(this.dirX == -1){
+      if(this.bounce_left(CANVAS, left_bar)){
+        left_bar.setActive(false);
+        right_bar.setActive(true);
+      }
+    }
+    else{
+      if(this.bounce_right(CANVAS, right_bar)){
+        left_bar.setActive(true);
+        right_bar.setActive(false);
+
+      }
+    }
   };
 
   this.isOut = function(CANVAS){
@@ -98,6 +111,9 @@ var ball = new function(){
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
       if(CANVAS.record < CANVAS.score) CANVAS.record = CANVAS.score;
       CANVAS.score = 0;
+
+      left_bar.setActive(true);
+      right_bar.setActive(false);
     }
     this.bounce(CANVAS, left_bar, right_bar);
   };

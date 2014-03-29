@@ -35,4 +35,13 @@ function bar(){
     this.shape.x = this.x;
     this.shape.y = this.y;
   };
+
+  this.setActive = function(value){
+    if(value){
+      createjs.Tween.get(this.shape).to({alpha:1}, 400);
+    }
+    else{
+      createjs.Tween.get(this.shape).to({alpha:0.3}, 400);
+    }
+  };
 };
