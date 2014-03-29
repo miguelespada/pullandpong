@@ -3,12 +3,14 @@ function bar(){
   this.width = 15;
   this.height = 80;
 
-  this.init = function(color){
+  this.init = function(color, dir){
     this.color = color;
     this.shape = new createjs.Shape();
     this.shape.graphics.beginFill(this.color)
          .drawRect(0, 0, this.width, this.height)
          .endFill();
+
+    this.dir = dir;
   };
 
   this.setInitialPosition = function(x, y){
@@ -25,8 +27,8 @@ function bar(){
    };
 
    this.update = function(CANVAS){
-      if (CANVAS.up) this.move(CANVAS, -1);
-      if (CANVAS.down) this.move(CANVAS, 1);
+      if (CANVAS.up) this.move(CANVAS, -1 * this.dir);
+      if (CANVAS.down) this.move(CANVAS, 1 * this.dir);
    };
 
    this.draw = function(){

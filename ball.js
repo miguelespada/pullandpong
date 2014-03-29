@@ -42,7 +42,7 @@ var ball = new function(){
     if ((this.x - this.radius) <= (bar.width) && 
         (this.offset(bar) >= 0 && this.offset(bar) <= bar.height)){
       this.dirX *= -1;
-      this.dirY = this.normalizedOffset(bar) * angleFactor;
+      this.dirY = this.normalizedOffset(bar) * this.angleFactor;
     }
   };
 
