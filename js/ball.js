@@ -4,8 +4,8 @@ var ball = new function(){
 
   this.incX = 5;
   this.incY = 5;
-  this.dirX = 1;
-  this.dirY = 0;
+  this.dirX = -1;
+  this.dirY = -1;
   this.angleFactor = 2;
 
   this.createShape = function(color) {
@@ -27,7 +27,6 @@ var ball = new function(){
       || (this.y - this.radius <= 0 && this.dirY < 0)){
       this.dirY *= -1;
     }
-
   };
 
   this.offset = function(bar){
@@ -46,17 +45,13 @@ var ball = new function(){
     }
   };
 
-
   this.bounce_right = function(CANVAS, bar){
-
     if ((this.x + this.radius) >= (CANVAS.width - bar.width) && 
         (this.offset(bar) >= 0 && this.offset(bar) <= bar.height)){
       this.dirX *= -1;
       this.dirY = this.normalizedOffset(bar) * this.angleFactor;
     }
   };
-
-
 
   this.bounce = function(CANVAS, left_bar, right_bar) {
     this.bounceY(CANVAS);
@@ -84,7 +79,6 @@ var ball = new function(){
     if(this.isOut(CANVAS)){
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
     }
-
     this.bounce(CANVAS, left_bar, right_bar);
   };
 
