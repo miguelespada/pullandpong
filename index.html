@@ -19,7 +19,9 @@
 
   var init = function() {
       CANVAS.init();
-      ball.init("#FF0000", CANVAS.stage);
+      ball.init("#FF0000");
+      CANVAS.addShape(ball.shape);
+      ball.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
 
       createjs.Ticker.setFPS(30);
       createjs.Ticker.addEventListener("tick", tick);

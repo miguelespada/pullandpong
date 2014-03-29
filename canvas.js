@@ -24,3 +24,7 @@ CANVAS.init = function(){
 CANVAS.update = function(){
   CANVAS.stage.update();
 }
+
+CANVAS.addShape = function(shape){
+  CANVAS.stage.addChild(shape);
+}
