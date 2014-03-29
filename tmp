@@ -1,3 +1,8 @@
+
+
+
+
+
     PM.ballBounceRight = function(){
       if (PM.ball.x >= PM.doodleWidth - PM.ballDiameter/2 - PM.barWidth){
         if (PM.ball.y - PM.doodleHeight/2 >= PM.barRight.y - (PM.barHeight/2 + PM.ballDiameter/2)
@@ -27,84 +32,7 @@
     }
 
 
-     handleTouch = function() {
-      createjs.Touch.enable(PM.stage);
-      PM.stage.on("stagemousedown", function(event){PM.mouseDown(event);});
-      PM.stage.on("stagemousemove", function(event){PM.mouseMove(event);});
-      PM.stage.on("stagemouseup", function(event){PM.mouseUp(event);});
-      document.addEventListener( 'mouseup', PM.mouseUp, false );
-    }
-
-    PM.mouseDown = function(event) {
-      PM.touchStart = event.stageY;
-      PM.touch = true;
-    }
-
-    PM.mouseMove = function(event) {
-      if (PM.touch){
-        if (event.stageY > PM.touchTrack){
-          PM.down = true;
-          PM.up = false;
-        }
-        else if (event.stageY < PM.touchTrack){
-          PM.up = true;
-          PM.down = false;
-        }
-        PM.touchTrack = event.stageY;
-  
-        if (event.stageY > PM.touchStart && event.stageY < PM.touchTrack){
-          PM.touchStart = PM.touchTrack;
-        }
-        else if (event.stageY < PM.touchStart && event.stageY > PM.touchTrack){
-          PM.touchStart = PM.touchTrack;
-        }
-      }
-    }
-
-    PM.mouseUp = function() {
-      PM.touchStart = 0;
-      PM.touchTrack = 0;
-      PM.up = false;
-      PM.down = false;
-      PM.touch = false;
-    }
-
-
-
-    makeThingsMove = function() {
-      document.onkeydown = handleKeyDown;
-      document.onkeyup = handleKeyUp;
-
-      createjs.Ticker.setFPS(30);
-      createjs.Ticker.addEventListener("tick", PM.stage);
-      createjs.Ticker.addEventListener("tick", PM.tick);
-    };
-
-    handleKeyDown = function(event) {
-      if (!event) {
-        var event = window.event;
-      }
-      switch(event.keyCode) {
-        case 38: 
-        case 87: PM.up = true; break;
-
-        case 40: 
-        case 83: PM.down = true; break;
-      }
-    };
-
-    handleKeyUp = function(event) {
-      if (!event) {
-        var event = window.event;
-      }
-      switch(event.keyCode) {
-        case 38: 
-        case 87: PM.up = false; break;
-
-        case 40: 
-        case 83: PM.down = false; break;
-      }
-    };
+    
 
    
 
@@ -165,10 +93,6 @@
         PM.leftMoveDown();
       }
     };
-
-
-  PM.handleTouch();
-  makeThingsMove();
 
 
 

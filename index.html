@@ -7,13 +7,24 @@
   <script src="ball.js"></script>
   <script src="canvas.js"></script>
   <script src="events.js"></script>
+  <script src="bar.js"></script>
   <link rel="stylesheet" href="style.css"></link>
   <script>
   
   var init = function() {
       CANVAS.init("doodle");
       ball.init("#FF0000");
+
+      left_bar = new bar("#FF0000");
+     //right_bar = new bar("#FF0000");
+
+      left_bar.init(0, CANVAS.height/2 - left_bar.height / 2);
+      //right_bar.init(CANVAS.width - right_bar.width, CANVAS.height/2  - right_bar.height / 2);
+     
       CANVAS.addShape(ball.shape);
+      CANVAS.addShape(left_bar.shape);
+      //CANVAS.addShape(right_bar.shape);
+
       ball.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
   }
 
