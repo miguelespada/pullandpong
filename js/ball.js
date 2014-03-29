@@ -1,6 +1,6 @@
 var ball = new function(){
 
-  this.radius = 15;
+  this.radius = 10;
 
   this.angleFactor = 2;
   this.acc = 1.1;
