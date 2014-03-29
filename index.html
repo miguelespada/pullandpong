@@ -4,273 +4,71 @@
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
   <script src="http://code.createjs.com/tweenjs-0.5.1.min.js"></script>
-  <link rel="stylesheet" href="style.css"></link>
+  <script src="js/ball.js"></script>
+  <script src="js/canvas.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/bar.js"></script>
+  <link rel="stylesheet" href="css/style.css"></link>
   <script>
-    var PM = {};
-
-    PM.doodleId = "doodle";
-
-    PM.barWidth = 15;
-    PM.barHeight = 80;
-    PM.ballDiameter = 30;
-
-    PM.ballMoveX = 5;
-    PM.ballMoveY = 5;
-    PM.ballXDir = 1;
-    PM.ballYDir = 1;
-    PM.barMove = 10;
-
-    PM.touch = false;
-
-    PM.angleFactor = 1.5;
-
-    PM.gameOver = false;
-
-    function init() {
-      PM.getDoodleSize();
-      PM.addBarLeft("#FFFFFF");
-      PM.addBarRight("#FFFFFF");
-      PM.addBall("#FF0000");
-
-      PM.handleTouch();
-
-      PM.makeThingsMove();
-    }
-
-    PM.getDoodleSize = function() {
-      PM.stage = new createjs.Stage(PM.doodleId);
-      PM.doodleWidth = parseInt($("#" + PM.doodleId).css("width"));
-      PM.doodleHeight = parseInt($("#" + PM.doodleId).css("height"));
-      PM.doodleYCenter = (PM.doodleHeight - PM.barHeight)/2;
-    };
-
-    PM.addBarLeft = function(barcolor) {
-      PM.barLeft = new createjs.Shape();
-      PM.barLeft.graphics.beginFill(barcolor)
-                .drawRect(0, 
-                          PM.doodleYCenter, 
-                          PM.barWidth, 
-                          PM.barHeight)
-                .endFill();
-      PM.stage.addChild(PM.barLeft);
-    };
-
-    PM.addBarRight = function(barcolor) {
-      PM.barRight = new createjs.Shape();
-      PM.barRight.graphics.beginFill(barcolor)
-                          .drawRect(PM.doodleWidth, 
-                                    PM.doodleYCenter, 
-                                    - PM.barWidth, 
-                                    PM.barHeight)
-                          .endFill();
-      PM.stage.addChild(PM.barRight);
-    };
-
-    PM.addBall = function(ballcolor) {
-      PM.ball = new createjs.Shape();
-      PM.ball.graphics.beginFill(ballcolor).drawCircle(0, 0, PM.ballDiameter/2);
-      PM.ball.x = PM.doodleWidth/2;
-      PM.ball.y = PM.doodleHeight/2;
-      PM.stage.addChild(PM.ball);
-    };
-
-    PM.makeThingsMove = function() {
-      document.onkeydown = PM.handleKeyDown;
-      document.onkeyup = PM.handleKeyUp;
-
-      createjs.Ticker.setFPS(30);
-      createjs.Ticker.addEventListener("tick", PM.stage);
-      createjs.Ticker.addEventListener("tick", PM.tick);
-    };
-
-    PM.handleKeyDown = function(event) {
-      if (!event) {
-        var event = window.event;
-      }
-      switch(event.keyCode) {
-        case 38: 
-        case 87: PM.up = true; break;
-
-        case 40: 
-        case 83: PM.down = true; break;
-      }
-    };
-
-    PM.handleKeyUp = function(event) {
-      if (!event) {
-        var event = window.event;
-      }
-      switch(event.keyCode) {
-        case 38: 
-        case 87: PM.up = false; break;
-
-        case 40: 
-        case 83: PM.down = false; break;
-      }
-    };
-
-    PM.handleTouch = function() {
-      createjs.Touch.enable(PM.stage);
-      PM.stage.on("stagemousedown", function(event){PM.mouseDown(event);});
-      PM.stage.on("stagemousemove", function(event){PM.mouseMove(event);});
-      PM.stage.on("stagemouseup", function(event){PM.mouseUp(event);});
-      document.addEventListener( 'mouseup', PM.mouseUp, false );
-    }
-
-    PM.mouseDown = function(event) {
-      PM.touchStart = event.stageY;
-      PM.touch = true;
-    }
-
-    PM.mouseMove = function(event) {
-      if (PM.touch){
-        if (event.stageY > PM.touchTrack){
-          PM.down = true;
-          PM.up = false;
-        }
-        else if (event.stageY < PM.touchTrack){
-          PM.up = true;
-          PM.down = false;
-        }
-        PM.touchTrack = event.stageY;
   
-        if (event.stageY > PM.touchStart && event.stageY < PM.touchTrack){
-          PM.touchStart = PM.touchTrack;
-        }
-        else if (event.stageY < PM.touchStart && event.stageY > PM.touchTrack){
-          PM.touchStart = PM.touchTrack;
-        }
-      }
-    }
+  var init = function() {
+    CANVAS.init("doodle");
 
-    PM.mouseUp = function() {
-      PM.touchStart = 0;
-      PM.touchTrack = 0;
-      PM.up = false;
-      PM.down = false;
-      PM.touch = false;
-    }
+    ball.init("#FF0000");
+    CANVAS.addShape(ball.shape);
+    ball.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
 
-    PM.rightMoveDown = function(){
-      if(PM.barRight.y < (PM.doodleHeight - PM.barHeight)/2){
-        PM.barLeft.y -= PM.barMove;
-        PM.barRight.y += PM.barMove;
-      }
-    };
+    left_bar = new bar();
+    left_bar.init("#FF0000", 1);
+    CANVAS.addShape(left_bar.shape);
+    left_bar.setInitialPosition(0, CANVAS.height/2 - left_bar.height / 2);
 
-    PM.rightMoveUp = function(){
-      if(PM.barRight.y > - (PM.doodleHeight - PM.barHeight)/2){
-        PM.barLeft.y += PM.barMove;
-        PM.barRight.y -= PM.barMove;
-      }
-    };
+    right_bar = new bar();
+    right_bar.init("#FF0000", -1);
+    CANVAS.addShape(right_bar.shape);
+    right_bar.setInitialPosition(CANVAS.width - right_bar.width, 
+                                CANVAS.height/2  - right_bar.height / 2);
 
-    PM.leftMoveDown = function(){
-      if(PM.barLeft.y < (PM.doodleHeight - PM.barHeight)/2){
-        PM.barLeft.y += PM.barMove;
-        PM.barRight.y -= PM.barMove;
-      }
-    };
+    CANVAS.record = 10;
+    CANVAS.score = 0;
+  }
 
-    PM.leftMoveUp = function(){
-      if(PM.barLeft.y > - (PM.doodleHeight - PM.barHeight)/2){
-        PM.barLeft.y -= PM.barMove;
-        PM.barRight.y += PM.barMove;
-      }
-    };
+  var setScore = function(){
+    $('#score').text(CANVAS.score);
+    $('#record').text(CANVAS.record);
+  }
 
-    PM.rightActivated = function() {
-      createjs.Tween.get(PM.barLeft).to({alpha:0.3}, 400);
-      createjs.Tween.get(PM.barRight).to({alpha:1}, 400);
-    };
+  var tick = function() {
+    left_bar.update(CANVAS);
+    left_bar.draw();
 
-    PM.leftActivated = function() {
-      createjs.Tween.get(PM.barLeft).to({alpha:1}, 400);
-      createjs.Tween.get(PM.barRight).to({alpha:0.3}, 400);
-    }; 
+    right_bar.update(CANVAS);
+    right_bar.draw();
 
-    PM.rightBarControl = function() {
-      PM.rightActivated();        
-      if (PM.up){
-        PM.rightMoveUp();
-      }
-      else if (PM.down){
-        PM.rightMoveDown();
-      }
-    };
+    ball.update(CANVAS, left_bar, right_bar);
+    ball.draw();  
 
-    PM.leftBarControl = function() {
-      PM.leftActivated();
-      if (PM.up){
-        PM.leftMoveUp();
-      }
-      else if (PM.down){
-        PM.leftMoveDown();
-      }
-    };
+    CANVAS.update();
+    setScore();
+  };
 
-    PM.initializeBallMove = function() {
-      PM.ball.x += PM.ballMoveX * PM.ballXDir;
-      PM.ball.y += PM.ballMoveY * PM.ballYDir;
-    };
 
-    PM.ballBounceEdge = function() {
-      if (PM.ball.y >= PM.doodleHeight - PM.ballDiameter/2 || PM.ball.y <= PM.ballDiameter/2){
-        PM.ballYDir = - PM.ballYDir;
-      }
-    };
+  var addCallbacks = function(){
+    document.onkeydown = handleKeyDown;
+    document.onkeyup = handleKeyUp;
 
-    PM.ballBounceRight = function(){
-      if (PM.ball.x >= PM.doodleWidth - PM.ballDiameter/2 - PM.barWidth){
-        if (PM.ball.y - PM.doodleHeight/2 >= PM.barRight.y - (PM.barHeight/2 + PM.ballDiameter/2)
-         && PM.ball.y - PM.doodleHeight/2 <= PM.barRight.y + (PM.barHeight/2 + PM.ballDiameter/2)
-         && !PM.gameOver) {
-          PM.ballXDir = - PM.ballXDir;
-          PM.ballYDir = PM.ballYDir + ((PM.ball.y - PM.doodleHeight/2) - PM.barRight.y)/(PM.barHeight + PM.ballDiameter) * PM.angleFactor;
-        }
-        else {
-          PM.gameOver = true;
-        }             
-      }
-    };
+    createjs.Ticker.setFPS(30);
+    createjs.Ticker.addEventListener("tick", tick);
+  };
 
-    PM.ballBounceLeft = function(){
-      if (PM.ball.x <= PM.ballDiameter/2 + PM.barWidth){
-        if (PM.ball.y - PM.doodleHeight/2 >= PM.barLeft.y - (PM.barHeight/2 + PM.ballDiameter/2)
-         && PM.ball.y - PM.doodleHeight/2 <= PM.barLeft.y + (PM.barHeight/2 + PM.ballDiameter/2)
-         && !PM.gameOver) {
-          PM.ballXDir = - PM.ballXDir;
-          PM.ballYDir = PM.ballYDir + ((PM.ball.y - PM.doodleHeight/2) - PM.barLeft.y)/(PM.barHeight + PM.ballDiameter) * PM.angleFactor;
-        }
-        else {
-          PM.gameOver = true;
-        }
-      }
-    }
 
-    PM.tick = function() {
-
-      PM.initializeBallMove();
-      PM.ballBounceEdge();
-
-      //When the ball is moving to the right
-      if (PM.ballXDir >= 0 && !PM.gameOver){
-        PM.rightBarControl();
-        PM.ballBounceRight();
-      }
-      //When the ball is moving to the left
-      if (PM.ballXDir < 0 && !PM.gameOver){
-        PM.leftBarControl();
-        PM.ballBounceLeft();
-      }
-
-    //Update the stage
-      PM.stage.update();
-    };
-
-  </script>
+  init();
+  addCallbacks();
+</script>
 </head>
 <body onLoad="init();">
   <canvas id="doodle" width="500" height="300"></canvas>
+  <div><span>Record:</span><span id ="record"></span></div> 
+  <div><span>Score:</span><span id ="score"></span></div> 
 </body>
 </html>
