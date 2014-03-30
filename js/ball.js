@@ -56,6 +56,9 @@ var ball = new function(){
   this.hit = function(CANVAS, bar){
     this.dirX *= -1;
     this.dirY = this.normalizedOffset(bar) * this.angleFactor;
+    
+    if(this.dirY == 0) (this.dirY = Math.random() - 0.5) / 2;
+
     CANVAS.score += 1;
     this.incX *= this.acc;
     if(this.incX > 25) this.incX = 25;
