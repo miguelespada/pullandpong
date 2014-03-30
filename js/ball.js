@@ -1,4 +1,3 @@
-var traceLen = 30;
 
 var ball = new function(){
 
@@ -6,7 +5,6 @@ var ball = new function(){
 
   this.angleFactor = 2;
   this.acc = 1.1;
-  this.trace = new Array();
 
   this.createShape = function(color) {
     this.color = color;
@@ -19,6 +17,7 @@ var ball = new function(){
       this.dirY = -1;
     else
       this.dirY = 1;
+    this.dirY = 0;
   };
 
   this.setInitialSpeed = function(){
@@ -59,6 +58,7 @@ var ball = new function(){
     this.dirY = this.normalizedOffset(bar) * this.angleFactor;
     CANVAS.score += 1;
     this.incX *= this.acc;
+    if(this.incX > 25) this.incX = 25;
   };
 
   this.bounce_left = function(CANVAS, bar){
@@ -100,31 +100,6 @@ var ball = new function(){
     return this.x <= 0 || (this.x - this.radius) > CANVAS.width ;
   };
 
-  this.pushTrace = function(x, y){
-    var circle = new createjs.Shape();
-    circle = new createjs.Shape();
-    circle.graphics.beginFill(this.color).drawCircle(x, y, this.radius);
-    this.trace.push(circle);
-  };
-
-  this.drawTrace = function(CANVAS){
-    for(var i = 0; i < this.trace.length; i ++){
-      this.trace[i].alpha = 1/(this.trace.length - i) * 0.75;
-      CANVAS.addShape(this.trace[i]);
-    }
-    if(this.trace.length > traceLen){
-      CANVAS.removeShape(this.trace[0]);
-      this.trace.shift();
-    };
-  };
-
-  this.emptyTrace = function(CANVAS){
-    for(var i = 0; i < this.trace.length; i ++){
-      CANVAS.removeShape(this.trace[i]);
-    }
-    this.trace = new Array();
-  }
-
   this.update = function(CANVAS, left_bar, right_bar){
     // Debuggin keys
     // if(CANVAS.dLeft) this.x += 5;
@@ -132,7 +107,6 @@ var ball = new function(){
     // if(CANVAS.dUp) this.y -= 5;
     // if(CANVAS.dDown) this.y += 5;
     // ...
-    this.pushTrace(this.x, this.y);
 
     this.x += this.incX * this.dirX;
     this.y += this.incY * this.dirY;
@@ -146,7 +120,6 @@ var ball = new function(){
       left_bar.setActive(true);
       right_bar.setActive(false);
 
-      this.emptyTrace(CANVAS);
     }
     this.bounce(CANVAS, left_bar, right_bar);
   };
@@ -154,6 +127,5 @@ var ball = new function(){
   this.draw = function(){
     this.shape.x = this.x;
     this.shape.y = this.y;
-    this.drawTrace(CANVAS);
   };
 };
