@@ -1,3 +1,25 @@
+#title{
+	width:100%;
+	margin: 0 auto;
+	text-align: center;
+	font-size:48px;
+}
+
 #doodle{
 	background-color: #777;
+	margin: 0 auto;
+}
+
+#recordtxt{
+	width:100%;
+	margin: 0 auto;
+	text-align: center;
+	font-size:18px;
+}
+
+#scoretxt{
+	width:100%;
+	margin: 0 auto;
+	text-align: center;
+	font-size:18px;
 }
