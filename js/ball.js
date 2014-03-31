@@ -36,6 +36,7 @@ var ball = new function(){
 
   this.init = function(color) { 
     this.createShape(color);
+    this.breakrecord = false;
   };
 
   this.bounceY = function(CANVAS) {
@@ -124,6 +125,8 @@ var ball = new function(){
 
     if(this.isOut(CANVAS)){
 
+      this.breakrecord = false;
+
       countdown.init();
       this.hide();
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
@@ -139,6 +142,12 @@ var ball = new function(){
       right_bar.setActive(false);
 
     }
+
+    if (CANVAS.record < CANVAS.score && !this.breakrecord){
+      newrecord.init();
+      this.breakrecord = true;
+    }
+
     this.bounce(CANVAS, left_bar, right_bar);
   };
 
