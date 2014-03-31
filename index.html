@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css"></link>
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
   <script src="http://code.createjs.com/tweenjs-0.5.1.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script src="js/ball.js"></script>
   <script src="js/canvas.js"></script>
   <script src="js/events.js"></script>
   <script src="js/bar.js"></script>
+  <script src="js/text.js"></script>
   <script>
   
   var init = function() {
     CANVAS.init("doodle");
 
+    text.countdown();
+
     ball.init("#FF0000");
-    CANVAS.addShape(ball.shape);
-    ball.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
+    setTimeout(function(){    
+      CANVAS.addShape(ball.shape);
+      ball.setInitialPosition(CANVAS.width/2, CANVAS.height/2);  
+      ball.setInitialSpeed();
+    }, 3000);
 
     left_bar = new bar();
     left_bar.init("#FF0000", 1);
@@ -29,8 +37,12 @@
     right_bar.setInitialPosition(CANVAS.width - right_bar.width, 
                                 CANVAS.height/2  - right_bar.height / 2);
 
+    CANVAS.addTouch();
+
     CANVAS.record = 10;
     CANVAS.score = 0;
+
+    addCallbacks();
   }
 
   var setScore = function(){
@@ -52,23 +64,25 @@
     setScore();
   };
 
-
   var addCallbacks = function(){
     document.onkeydown = handleKeyDown;
     document.onkeyup = handleKeyUp;
+
+    CANVAS.stage.on("stagemousedown", function(event){mouseDown(event);});
+    CANVAS.stage.on("stagemousemove", function(event){mouseMove(event);});
+    CANVAS.stage.on("stagemouseup", function(event){mouseUp(event);});
+    document.onmouseup = mouseUp;
 
     createjs.Ticker.setFPS(30);
     createjs.Ticker.addEventListener("tick", tick);
   };
 
-
-  init();
-  addCallbacks();
 </script>
 </head>
 <body onLoad="init();">
-  <canvas id="doodle" width="500" height="300"></canvas>
-  <div><span>Record:</span><span id ="record"></span></div> 
-  <div><span>Score:</span><span id ="score"></span></div> 
+  <div id="title">PONG</div>
+  <canvas id="doodle" width="500" height="300" class="img-responsive"></canvas>
+  <div id="recordtxt"><span>Record:</span><span id ="record"></span></div> 
+  <div id="scoretxt"><span>Score:</span><span id ="score"></span></div> 
 </body>
 </html>

@@ -29,12 +29,13 @@ var ball = new function(){
   this.setInitialPosition = function(x, y){
     this.x = x;
     this.y = y;
-    this.setInitialSpeed();
-
+    this.incX = 0;
+    this.incY = 0;
   };
 
   this.init = function(color) { 
     this.createShape(color);
+    this.breakrecord = false;
   };
 
   this.bounceY = function(CANVAS) {
@@ -103,6 +104,14 @@ var ball = new function(){
     return this.x <= 0 || (this.x - this.radius) > CANVAS.width ;
   };
 
+  this.hide = function(){
+    createjs.Tween.get(this.shape).to({alpha:0}, 1);
+  };
+
+  this.show = function(){
+    createjs.Tween.get(this.shape).to({alpha:1}, 1);
+  };
+
   this.update = function(CANVAS, left_bar, right_bar){
     // Debuggin keys
     // if(CANVAS.dLeft) this.x += 5;
@@ -115,15 +124,32 @@ var ball = new function(){
     this.y += this.incY * this.dirY;
 
     if(this.isOut(CANVAS)){
+
+      this.breakrecord = false;
+
+      text.countdown();
+      this.hide();
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
+      setTimeout(function(){
+        ball.setInitialSpeed();
+        ball.show();
+      }, 3000);
       
-      if(CANVAS.record < CANVAS.score) CANVAS.record = CANVAS.score;
       CANVAS.score = 0;
 
       left_bar.setActive(true);
       right_bar.setActive(false);
 
     }
+
+    if (CANVAS.record < CANVAS.score){
+      if (!this.breakrecord){
+        text.newrecord();
+        this.breakrecord = true;
+      }
+      CANVAS.record = CANVAS.score;
+    }
+
     this.bounce(CANVAS, left_bar, right_bar);
   };
 

@@ -111,6 +111,7 @@
 
     PM.handleTouch = function() {
       createjs.Touch.enable(PM.stage);
+      console.log(PM.stage);
       PM.stage.on("stagemousedown", function(event){PM.mouseDown(event);});
       PM.stage.on("stagemousemove", function(event){PM.mouseMove(event);});
       PM.stage.on("stagemouseup", function(event){PM.mouseUp(event);});
