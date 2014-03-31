@@ -1,4 +1,3 @@
-
 var ball = new function(){
 
   this.radius = 8;
@@ -57,6 +56,7 @@ var ball = new function(){
     this.dirX *= -1;
     this.dirY = this.normalizedOffset(bar) * this.angleFactor;
     
+    // Add noise when chit on the center bar
     if(this.dirY == 0) (this.dirY = Math.random() - 0.5) / 2;
 
     CANVAS.score += 1;
