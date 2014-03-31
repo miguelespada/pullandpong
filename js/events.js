@@ -30,3 +30,44 @@ handleKeyUp = function(event) {
 
   }
 };
+
+mouseDown = function(event) {
+
+  CANVAS.touchStart = event.stageY;
+  CANVAS.touch = true;
+  
+};
+
+mouseMove = function(event) {
+  
+  if (CANVAS.touch){
+
+    if (event.stageY > CANVAS.touchTrack){
+      CANVAS.down = true;
+      CANVAS.up = false;
+    }
+    else if (event.stageY < CANVAS.touchTrack){
+      CANVAS.up = true;
+      CANVAS.down = false;
+    }
+
+    CANVAS.touchTrack = event.stageY; 
+
+    if (event.stageY > CANVAS.touchStart && event.stageY < CANVAS.touchTrack){
+      CANVAS.touchStart = CANVAS.touchTrack;
+    }
+    else if (event.stageY < CANVAS.touchStart && event.stageY > CANVAS.touchTrack){
+      CANVAS.touchStart = CANVAS.touchTrack;
+    }
+  }
+};
+
+mouseUp = function() {
+
+  CANVAS.touchStart = 0;
+  CANVAS.touchTrack = 0;
+  CANVAS.up = false;
+  CANVAS.down = false;
+  CANVAS.touch = false;
+
+};

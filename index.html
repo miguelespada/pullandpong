@@ -29,8 +29,12 @@
     right_bar.setInitialPosition(CANVAS.width - right_bar.width, 
                                 CANVAS.height/2  - right_bar.height / 2);
 
+    CANVAS.addTouch();
+
     CANVAS.record = 10;
     CANVAS.score = 0;
+
+    addCallbacks();
   }
 
   var setScore = function(){
@@ -52,18 +56,19 @@
     setScore();
   };
 
-
   var addCallbacks = function(){
     document.onkeydown = handleKeyDown;
     document.onkeyup = handleKeyUp;
+
+    CANVAS.stage.on("stagemousedown", function(event){mouseDown(event);});
+    CANVAS.stage.on("stagemousemove", function(event){mouseMove(event);});
+    CANVAS.stage.on("stagemouseup", function(event){mouseUp(event);});
+    document.onmouseup = mouseUp;
 
     createjs.Ticker.setFPS(30);
     createjs.Ticker.addEventListener("tick", tick);
   };
 
-
-  init();
-  addCallbacks();
 </script>
 </head>
 <body onLoad="init();">

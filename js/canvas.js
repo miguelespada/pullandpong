@@ -28,5 +28,9 @@ var CANVAS = new function(){
   this.removeShape = function(shape){
     this.stage.removeChild(shape);
   };
+
+  this.addTouch = function(){
+    createjs.Touch.enable(this.stage);
+  };
 };
 
