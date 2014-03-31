@@ -9,14 +9,13 @@
   <script src="js/canvas.js"></script>
   <script src="js/events.js"></script>
   <script src="js/bar.js"></script>
-  <script src="js/countdown.js"></script>
-  <script src="js/newrecord.js"></script>
+  <script src="js/text.js"></script>
   <script>
   
   var init = function() {
     CANVAS.init("doodle");
 
-    countdown.init();
+    text.countdown();
 
     ball.init("#FF0000");
     setTimeout(function(){    

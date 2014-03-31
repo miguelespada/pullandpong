@@ -127,7 +127,7 @@ var ball = new function(){
 
       this.breakrecord = false;
 
-      countdown.init();
+      text.countdown();
       this.hide();
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
       setTimeout(function(){
@@ -135,7 +135,6 @@ var ball = new function(){
         ball.show();
       }, 3000);
       
-      if(CANVAS.record < CANVAS.score) CANVAS.record = CANVAS.score;
       CANVAS.score = 0;
 
       left_bar.setActive(true);
@@ -143,9 +142,12 @@ var ball = new function(){
 
     }
 
-    if (CANVAS.record < CANVAS.score && !this.breakrecord){
-      newrecord.init();
-      this.breakrecord = true;
+    if (CANVAS.record < CANVAS.score){
+      if (!this.breakrecord){
+        text.newrecord();
+        this.breakrecord = true;
+      }
+      CANVAS.record = CANVAS.score;
     }
 
     this.bounce(CANVAS, left_bar, right_bar);
