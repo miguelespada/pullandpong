@@ -30,8 +30,8 @@ var ball = new function(){
   this.setInitialPosition = function(x, y){
     this.x = x;
     this.y = y;
-    this.setInitialSpeed();
-
+    this.incX = 0;
+    this.incY = 0;
   };
 
   this.init = function(color) { 
@@ -103,6 +103,14 @@ var ball = new function(){
     return this.x <= 0 || (this.x - this.radius) > CANVAS.width ;
   };
 
+  this.hide = function(){
+    createjs.Tween.get(this.shape).to({alpha:0}, 1);
+  };
+
+  this.show = function(){
+    createjs.Tween.get(this.shape).to({alpha:1}, 1);
+  };
+
   this.update = function(CANVAS, left_bar, right_bar){
     // Debuggin keys
     // if(CANVAS.dLeft) this.x += 5;
@@ -115,7 +123,14 @@ var ball = new function(){
     this.y += this.incY * this.dirY;
 
     if(this.isOut(CANVAS)){
+
+      countdown.init();
+      this.hide();
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
+      setTimeout(function(){
+        ball.setInitialSpeed();
+        ball.show();
+      }, 3000);
       
       if(CANVAS.record < CANVAS.score) CANVAS.record = CANVAS.score;
       CANVAS.score = 0;
