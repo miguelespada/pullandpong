@@ -1,32 +1,43 @@
 #title{
-	width:100%;
+	position: relative;
 	margin: 0 auto;
-	text-align: center;
-	font-size:48px;
+	width: 400px;
+}
+
+#container{
+	position: relative;
+	margin: 0 auto;
+	width: 1000px;
+	max-width:90%;
+}
+
+#background{
+	position: relative;
 }
 
 #doodle{
-	background-color: #777;
+	position: absolute;
+	top:0px;
+	left:0px;
+}
+
+#footer{
 	margin: 0 auto;
+	width: 1000px;
+	max-width:90%;
 }
 
 #recordtxt{
-	width:100%;
-	margin: 0 auto;
 	text-align: center;
-	font-size:18px;
+	font-size:14px;
 }
 
 #scoretxt{
-	width:100%;
-	margin: 0 auto;
 	text-align: center;
-	font-size:18px;
+	font-size:14px;
 }
 
 #sharefb{
-	width:100%;
-	margin: 0 auto;
 	text-align: center;
-	font-size:18px;
+	font-size:14px;
 }

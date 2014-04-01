@@ -1,13 +1,13 @@
 function bar(){
   this.incY = 10;
-  this.width = 10;
-  this.height = 80;
+  this.width = 15;
+  this.height = 100;
 
   this.init = function(color, dir){
     this.color = color;
     this.shape = new createjs.Shape();
     this.shape.graphics.beginFill(this.color)
-         .drawRect(0, 0, this.width, this.height)
+         .drawRect(0, 0, this.width/CANVAS.stage.scaleX, this.height/CANVAS.stage.scaleY)
          .endFill();
 
     this.dir = dir;
@@ -19,11 +19,11 @@ function bar(){
    };
 
   this.move = function(CANVAS, dir){
-    this.y += this.incY * dir;
+    this.y += this.incY/CANVAS.stage.scaleY * dir;
     
     //rollback if out of borders
-    if(this.y > (CANVAS.height - this.height) || this.y < 0)
-      this.y -= this.incY * dir;
+    if(this.y > (CANVAS.height - this.height/CANVAS.stage.scaleX) || this.y < 0)
+      this.y -= this.incY/CANVAS.stage.scaleY * dir;
    };
 
    this.update = function(CANVAS){

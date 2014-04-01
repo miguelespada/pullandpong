@@ -12,7 +12,7 @@ var text = new function(){
       (function(j){
         setTimeout(function(){
           CANVAS.removeShape(text.shape);
-          text.new(j, "100px Helvetica", "#FF0000");
+          text.new(j, 100/CANVAS.stage.scaleX + "px Helvetica", "#000000");
           CANVAS.addShape(text.shape);
           createjs.Tween.get(text.shape).to({alpha:0}, 1000);
         },(3 - j) * 1000);
@@ -21,22 +21,22 @@ var text = new function(){
   };
 
   this.newrecord = function(){
-    this.new("New record!", "60px Helvetica", "#FF0000");
+    this.new("New record!", 60/CANVAS.stage.scaleX + "px Helvetica", "#000000");
     CANVAS.addShape(this.shape);
     createjs.Tween.get(this.shape).to({alpha:0}, 1000);
     setTimeout(function(){CANVAS.removeShape(text.shape);}, 1000);
   };
 
   this.score = function(score){
-    this.new("Your score: " + score, "60px Helvetica", "#FF0000");
+    this.new("Your score: " + score, 60/CANVAS.stage.scaleX + "px Helvetica", "#000000");
     CANVAS.addShape(this.shape);
     createjs.Tween.get(this.shape).to({alpha:0}, 1000);
     setTimeout(function(){CANVAS.removeShape(text.shape);}, 1000);
   };
 
   this.scoreandrecord = function(score){
-    this.new("Your score: " + score + "\n" + "New record!", "60px Helvetica", "#FF0000");
-    this.shape.y = CANVAS.height / 2 - 30;
+    this.new("Your score: " + score + "\n" + "New record!", 60/CANVAS.stage.scaleX + "px Helvetica", "#000000");
+    this.shape.y = CANVAS.height / 2 - 30 / CANVAS.stage.scaleY;
     CANVAS.addShape(this.shape);
     createjs.Tween.get(this.shape).to({alpha:0}, 1000);
     setTimeout(function(){CANVAS.removeShape(text.shape);}, 1000);

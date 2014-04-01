@@ -15,6 +15,9 @@ var CANVAS = new function(){
     this.id = name;
     this.createStage();
     this.getSize();
+
+    this.canvasSize();
+    this.stage.update();
   };
 
   this.update = function(){
@@ -31,6 +34,17 @@ var CANVAS = new function(){
 
   this.addTouch = function(){
     createjs.Touch.enable(this.stage);
+  };
+
+  this.canvasSize = function(){
+    this.containerWidth = document.getElementById("container").clientWidth;
+    this.containerHeight = document.getElementById("container").clientHeight;
+  
+    this.stageWidth = 1000;
+    this.stageHeight = 520;
+  
+    this.stage.scaleX = this.stageWidth / this.containerWidth;
+    this.stage.scaleY = this.stageHeight / this.containerHeight;
   };
 };
 

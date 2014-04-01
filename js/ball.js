@@ -1,6 +1,6 @@
 var ball = new function(){
 
-  this.radius = 8;
+  this.radius = 15;
 
   this.angleFactor = 2;
   this.acc = 1.1;
@@ -8,7 +8,7 @@ var ball = new function(){
   this.createShape = function(color) {
     this.color = color;
     this.shape = new createjs.Shape();
-    this.shape.graphics.beginFill(color).drawCircle(0, 0, this.radius);
+    this.shape.graphics.beginFill(color).drawCircle(0, 0, this.radius/CANVAS.stage.scaleX);
   };  
 
   this.randomDirectionY = function(){
@@ -20,8 +20,8 @@ var ball = new function(){
   };
 
   this.setInitialSpeed = function(){
-    this.incX = 5;
-    this.incY = 5;
+    this.incX = 10/CANVAS.stage.scaleX;
+    this.incY = 10/CANVAS.stage.scaleY;
     this.dirX = -1;
     this.randomDirectionY();
   };
@@ -39,8 +39,8 @@ var ball = new function(){
   };
 
   this.bounceY = function(CANVAS) {
-    if ( (this.y + this.radius >= CANVAS.height && this.dirY >= 0)
-      || (this.y - this.radius <= 0 && this.dirY < 0)){
+    if ( (this.y + this.radius/CANVAS.stage.scaleX >= CANVAS.height && this.dirY >= 0)
+      || (this.y - this.radius/CANVAS.stage.scaleX <= 0 && this.dirY < 0)){
       this.dirY *= -1;
     }
   };
@@ -50,7 +50,7 @@ var ball = new function(){
   }
 
   this.normalizedOffset = function(bar){
-    return (this.offset(bar) - bar.height /2) / (bar.height/2);
+    return (this.offset(bar) - bar.height/CANVAS.stage.scaleY/2) / (bar.height/CANVAS.stage.scaleY/2);
   }
 
   this.hit = function(CANVAS, bar){
@@ -58,16 +58,16 @@ var ball = new function(){
     this.dirY = this.normalizedOffset(bar) * this.angleFactor;
     
     // Add noise when chit on the center bar
-    if(this.dirY == 0) (this.dirY = Math.random() - 0.5) / 2;
+    if(Math.abs(this.dirY) < 0.1) (this.dirY = Math.random() - 0.5) / 2;
 
     CANVAS.score += 1;
     this.incX *= this.acc;
-    if(this.incX > 25) this.incX = 25;
+    if(this.incX > 25/CANVAS.stage.scaleX) this.incX = 25/CANVAS.stage.scaleX;
   };
 
   this.bounce_left = function(CANVAS, bar){
-    if ((this.x - this.radius) <= (bar.width) && 
-        (this.offset(bar) >= 0 && this.offset(bar) <= bar.height)){
+    if ((this.x - this.radius/CANVAS.stage.scaleX - 25/CANVAS.stage.scaleX ) <= (bar.width/CANVAS.stage.scaleX) && 
+        (this.offset(bar) >= 0 && this.offset(bar) <= bar.height/CANVAS.stage.scaleY)){
       this.hit(CANVAS, bar);
       return true;
     }
@@ -75,8 +75,8 @@ var ball = new function(){
   };
 
   this.bounce_right = function(CANVAS, bar){
-    if ((this.x + this.radius) >= (CANVAS.width - bar.width) && 
-        (this.offset(bar) >= 0 && this.offset(bar) <= bar.height)){
+    if ((this.x + this.radius/CANVAS.stage.scaleX + 25/CANVAS.stage.scaleX ) >= (CANVAS.width - bar.width/CANVAS.stage.scaleX) && 
+        (this.offset(bar) >= 0 && this.offset(bar) <= bar.height/CANVAS.stage.scaleY)){
       this.hit(CANVAS, bar);
       return true;
     }
@@ -101,7 +101,7 @@ var ball = new function(){
   };
 
   this.isOut = function(CANVAS){
-    return this.x <= 0 || (this.x - this.radius) > CANVAS.width ;
+    return this.x <= 25/CANVAS.stage.scaleX || (this.x - this.radius/CANVAS.stage.scaleX) > CANVAS.width - 25/CANVAS.stage.scaleX ;
   };
 
   this.hide = function(){
