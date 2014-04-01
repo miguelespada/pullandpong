@@ -125,15 +125,26 @@ var ball = new function(){
 
     if(this.isOut(CANVAS)){
 
-      this.breakrecord = false;
+      if (this.breakrecord){
+        text.scoreandrecord(CANVAS.score);
+        CANVAS.record = CANVAS.score;
+        this.breakrecord = false;
+      }
+      else {
+        text.score(CANVAS.score);
+      }
 
-      text.countdown();
+      setTimeout(function(){
+        text.countdown();
+      }, 1000);
+
       this.hide();
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
+
       setTimeout(function(){
         ball.setInitialSpeed();
         ball.show();
-      }, 3000);
+      }, 4000);
       
       CANVAS.score = 0;
 
@@ -147,7 +158,6 @@ var ball = new function(){
         text.newrecord();
         this.breakrecord = true;
       }
-      CANVAS.record = CANVAS.score;
     }
 
     this.bounce(CANVAS, left_bar, right_bar);

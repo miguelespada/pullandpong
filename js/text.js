@@ -27,4 +27,18 @@ var text = new function(){
     setTimeout(function(){CANVAS.removeShape(text.shape);}, 1000);
   };
 
+  this.score = function(score){
+    this.new("Your score: " + score, "60px Helvetica", "#FF0000");
+    CANVAS.addShape(this.shape);
+    createjs.Tween.get(this.shape).to({alpha:0}, 1000);
+    setTimeout(function(){CANVAS.removeShape(text.shape);}, 1000);
+  };
+
+  this.scoreandrecord = function(score){
+    this.new("Your score: " + score + "\n" + "New record!", "60px Helvetica", "#FF0000");
+    this.shape.y = CANVAS.height / 2 - 30;
+    CANVAS.addShape(this.shape);
+    createjs.Tween.get(this.shape).to({alpha:0}, 1000);
+    setTimeout(function(){CANVAS.removeShape(text.shape);}, 1000);
+  };
 };
