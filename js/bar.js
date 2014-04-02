@@ -22,16 +22,16 @@ function bar(){
     this.y += this.incY/CANVAS.stage.scaleY * dir;
     
     //rollback if out of borders
-    if(this.y > (CANVAS.height - this.height/CANVAS.stage.scaleX) || this.y < 0)
+    if(this.y > (CANVAS.height - this.height/CANVAS.stage.scaleY) || this.y < 0)
       this.y -= this.incY/CANVAS.stage.scaleY * dir;
-   };
+    };
 
-   this.update = function(CANVAS){
-      if (CANVAS.up) this.move(CANVAS, -1 * this.dir);
-      if (CANVAS.down) this.move(CANVAS, 1 * this.dir);
-   };
+  this.update = function(CANVAS){
+    if (CANVAS.up) this.move(CANVAS, -1 * this.dir);
+    if (CANVAS.down) this.move(CANVAS, 1 * this.dir);
+  };
 
-   this.draw = function(){
+  this.draw = function(){
     this.shape.x = this.x;
     this.shape.y = this.y;
   };
