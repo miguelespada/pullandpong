@@ -136,7 +136,7 @@ var ball = new function(){
 
       setTimeout(function(){
         text.countdown();
-      }, 1000);
+      }, 2000);
 
       this.hide();
       this.setInitialPosition(CANVAS.width/2, CANVAS.height/2);

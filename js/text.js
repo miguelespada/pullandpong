@@ -30,15 +30,15 @@ var text = new function(){
   this.score = function(score){
     this.new("Your score: " + score, 60/CANVAS.stage.scaleX + "px Helvetica", "#000000");
     CANVAS.addShape(this.shape);
-    createjs.Tween.get(this.shape).to({alpha:0}, 1000);
-    setTimeout(function(){CANVAS.removeShape(text.shape);}, 1000);
+    createjs.Tween.get(this.shape).to({alpha:0}, 2000);
+    setTimeout(function(){CANVAS.removeShape(text.shape);}, 2000);
   };
 
   this.scoreandrecord = function(score){
     this.new("Your score: " + score + "\n" + "New record!", 60/CANVAS.stage.scaleX + "px Helvetica", "#000000");
     this.shape.y = CANVAS.height / 2 - 30 / CANVAS.stage.scaleY;
     CANVAS.addShape(this.shape);
-    createjs.Tween.get(this.shape).to({alpha:0}, 1000);
-    setTimeout(function(){CANVAS.removeShape(text.shape);}, 1000);
+    createjs.Tween.get(this.shape).to({alpha:0}, 2000);
+    setTimeout(function(){CANVAS.removeShape(text.shape);}, 2000);
   };
 };
