@@ -31,7 +31,7 @@ var text = new function(){
     this.new("Your score: " + score, 60/CANVAS.stage.scaleX + "px Helvetica", "#000000");
     CANVAS.addShape(this.shape);
     createjs.Tween.get(this.shape).to({alpha:0}, 2000);
-    setTimeout(function(){CANVAS.removeShape(text.shape);}, 2000);
+    setTimeout(function(){CANVAS.removeShape(text.shape);}, 4000);
   };
 
   this.scoreandrecord = function(score){
