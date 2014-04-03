@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <meta property="og:image" content="img/thumbnail.jpg"/>
-  <meta property="og:description"content="Entra en juego con Pull&Bear y comparte tu experiencia"/>
+  <meta property="og:description"content=""/>
   <title>Pull&Pong</title>
   <link rel="stylesheet" href="css/style.css"></link>
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -184,6 +184,12 @@
     resizeTimeout = setTimeout(function(){window.location.reload();}, 100);
   };
 
+  var shareButton = function(){
+    var description = "Entra en juego con Pull&Bear y comparte tu experiencia \n" + "Mi record es " + CANVAS.record + ", ¿y el tuyo?"
+    $("meta[property='og\\:description']").attr("content", description);
+    window.open('https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F95.85.12.111%2Fpongtest', '_blank');
+  };
+
 </script>
 </head>
 <body onLoad="init();">
@@ -205,12 +211,12 @@
     <div id="block2" class="block">
       <div id="indi2" class="indi">¡Bien jugado! Has conseguido <span id="score2"></span> puntos</div>
       <button id="restart2" type="button" class="btn" onclick="startGame();">JUGAR OTRA VEZ</button>
-      <button id="share2" type="button" class="btn" onclick="window.open( 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F95.85.12.111%2Fpongtest', '_blank' )">COMPARTIR</button>
+      <button id="share2" type="button" class="btn" onclick="shareButton();">COMPARTIR</button>
     </div>
     <div id="block3" class="block">
       <div id="indi3" class="indi">¡Felicidades! Tu nuevo récord está en <span id="record3"></span> puntos</div>
       <button id="restart3" type="button" class="btn" onclick="startGame();">JUGAR OTRA VEZ</button>
-      <button id="share3" type="button" class="btn" onclick="window.open( 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F95.85.12.111%2Fpongtest', '_blank' )">COMPARTIR</button>
+      <button id="share3" type="button" class="btn" onclick="shareButton();">COMPARTIR</button>
     </div>
   </div>
 </body>
