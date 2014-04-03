@@ -13,22 +13,54 @@ body{
 	src: url(../font/SimplonMono-Medium.ttf);
 }
 
-#title{
-	position: relative;
-	margin: 0 auto;
-	width: 400px;
+.block{
+	background:#00efd2;
+	position: absolute;
+	text-align: center;
+}
+
+#block2{
+	display:none;
+}
+
+#block3{
+	display:none;
+}
+
+#puntos{
+	display:none;
+}
+
+.indi{
+	position:absolute;
+	font-family: Mono;
+	width: 100%;
+	text-align: center;
+	color: #000000;
+}
+
+.btn{
+	border:none;
+	outline:0;
+	background:#feeda7;
+	font-family: Eco;
+	color:#000000;
+	box-shadow: 5px 5px 0px #c2aace;
+	padding:8px;
+	margin-left:20px;
+	margin-right:20px;
 }
 
 #container{
 	background:#000000;
-	position: relative;
+	position: absolute;
 	margin-left: 90px;
 	margin-top:90px;
 	border: 10px solid #00efd2;
 }
 
 #background{
-	position: relative;
+	position: absolute;
 }
 
 #doodle{
@@ -53,12 +85,6 @@ body{
 	width: 100%;
 	text-align: center;
 	color: #00efd2;
-}
-
-#footer{
-	margin: 0 auto;
-	width: 1000px;
-	max-width:90%;
 }
 
 #record{
@@ -95,9 +121,4 @@ body{
 	text-align: center;
 	font-family: Mono;
 	color: #feeda7;
-}
-
-#sharefb{
-	text-align: center;
-	font-size:14px;
 }
