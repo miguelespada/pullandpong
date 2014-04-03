@@ -61,14 +61,40 @@ body{
 	max-width:90%;
 }
 
-#recordtxt{
+#record{
+	position:absolute;
+	top:0px;
+	left:50%;
 	text-align: center;
-	font-size:14px;
+	font-family: Eco;
+	color: #feeda7;
+}
+
+#score{
+	position:absolute;
+	top:0px;
+	left:0px;
+	text-align: center;
+	font-family: Eco;
+	color: #feeda7;
+}
+
+#recordtxt{
+	position:absolute;
+	top:0px;
+	left:50%;
+	text-align: center;
+	font-family: Mono;
+	color: #feeda7;
 }
 
 #scoretxt{
+	position:absolute;
+	top:0px;
+	left:0px;
 	text-align: center;
-	font-size:14px;
+	font-family: Mono;
+	color: #feeda7;
 }
 
 #sharefb{

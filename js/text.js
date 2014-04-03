@@ -21,10 +21,11 @@ var text = new function(){
   };
 
   this.newrecord = function(){
-    this.new("New record!", 60/CANVAS.stage.scaleX + "px Eco", "#feeda7");
-    CANVAS.addShape(this.shape);
-    createjs.Tween.get(this.shape).to({alpha:0}, 1000);
-    setTimeout(function(){CANVAS.removeShape(text.shape);}, 1000);
+    $("#title").html("NUEVO RECORD!");
+  };
+
+  this.entergame = function(){
+    $("#title").html("ENTRA EN JUEGO");
   };
 
   this.score = function(score){

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css"></link>
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -40,7 +41,7 @@
 
     CANVAS.addTouch();
 
-    CANVAS.record = 5;
+    CANVAS.record = 1;
     CANVAS.score = 0;
 
     addCallbacks();
@@ -97,10 +98,14 @@
 </head>
 <body onLoad="init();">
   <div id="container"> 
-    <img id="background" src="img/background.png">
-    <canvas id="doodle" width="1500" height="900"></canvas>
+    <img id="background" src="img/background.png">    
     <div id="title">ENTRA EN JUEGO</div>
     <div id="hash">hey #pullandbearboys</div>
+    <span id="score"></span>
+    <span id="record"></span>
+    <div id="scoretxt">PUNTUACIÓN</div>
+    <div id="recordtxt">RÉCORD</div>
+    <canvas id="doodle" width="1500" height="900"></canvas>
     <script>
       var windowW = $( window ).width();
       var windowH = $( window ).height();
@@ -115,6 +120,14 @@
         $("#title").css("font-size", (windowW - 200)/12);
         $("#hash").css("margin-top", (windowW - 200) * 0.22 + (windowH - windowW)/2);
         $("#hash").css("font-size", (windowW - 200)/40);
+        $("#score").css("margin-top", (windowW - 200)* 0.3 + (windowH - windowW)/2);
+        $("#score").css("font-size", (windowW - 200)/4);
+        $("#record").css("margin-top", (windowW - 200)* 0.3 + (windowH - windowW)/2);
+        $("#record").css("font-size", (windowW - 200)/4);
+        $("#scoretxt").css("margin-top", (windowW - 200)* 0.6 + (windowH - windowW)/2);
+        $("#scoretxt").css("font-size", (windowW - 200)/40);
+        $("#recordtxt").css("margin-top", (windowW - 200)* 0.6 + (windowH - windowW)/2);
+        $("#recordtxt").css("font-size", (windowW - 200)/40);
       }
       else {
         $("#background").height(windowH - 200);
@@ -123,16 +136,28 @@
         $("#title").css("font-size", (windowH - 200)/12);
         $("#hash").css("margin-top", (windowH - 200) * 0.22);
         $("#hash").css("font-size", (windowH - 200)/40);
+        $("#score").css("margin-top", (windowH - 200)* 0.3);
+        $("#score").css("font-size", (windowH - 200)/4);
+        $("#record").css("margin-top", (windowH - 200)* 0.3);
+        $("#record").css("font-size", (windowH - 200)/4);
+        $("#scoretxt").css("margin-top", (windowH - 200)* 0.6);
+        $("#scoretxt").css("font-size", (windowH - 200)/40);
+        $("#recordtxt").css("margin-top", (windowH - 200)* 0.6);
+        $("#recordtxt").css("font-size", (windowH - 200)/40);
       }
 
       $("#doodle").width(windowW - 200);
       $("#doodle").height(windowH - 200);
 
+      $("#score").width(windowW/2 - 100);
+      $("#record").width(windowW/2 - 100);
+
+      $("#scoretxt").width(windowW/2 - 100);
+      $("#recordtxt").width(windowW/2 - 100);
+
     </script>
   </div>
   <div id="footer" class="responsive">
-    <div id="recordtxt"><span>Record:</span><span id ="record"></span></div> 
-    <div id="scoretxt"><span>Score:</span><span id ="score"></span></div>
     <div id="sharefb"><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F95.85.12.111%2Fpullandpong" target="_blank">Share</a></div>
   </div>
 </body>

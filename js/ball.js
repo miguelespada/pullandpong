@@ -128,6 +128,7 @@ var ball = new function(){
       if (this.breakrecord){
         text.scoreandrecord(CANVAS.score);
         CANVAS.record = CANVAS.score;
+        text.entergame();
         this.breakrecord = false;
       }
       else {
