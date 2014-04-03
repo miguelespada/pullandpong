@@ -106,7 +106,10 @@
 
     $("#container").width(windowW - 200);
     $("#container").height(windowH - 200);
-    $(".btn").css("padding", windowW/180);
+    $(".btn").css("padding-left", windowW/180);
+    $(".btn").css("padding-right", windowW/180);
+    $(".btn").css("padding-top", windowW/180 + 1);
+    $(".btn").css("padding-bottom", windowW/180 - 1);
     $(".btn").css("margin-left", windowW/72);
     $(".btn").css("margin-right", windowW/72);
 
@@ -115,7 +118,7 @@
       $("#background").height(windowW - 200);
       $("#background").css("margin-top", (windowH - windowW)/2);
       $("#title").css("margin-top", (windowW - 200) * 0.05 + (windowH - windowW)/2);
-      $("#title").css("font-size", (windowW - 200)/14);
+      $("#title").css("font-size", (windowW - 200)/12.5);
       $("#hash").css("margin-top", (windowW - 200) * 0.18 + (windowH - windowW)/2);
       $("#hash").css("font-size", (windowW - 200)/40);
       $("#score").css("margin-top", (windowW - 200)* 0.35 + (windowH - windowW)/2);
@@ -141,7 +144,7 @@
       $("#background").height(windowH - 200);
       $("#background").css("margin-left", (windowW - windowH)/2);
       $("#title").css("margin-top", (windowH - 200) * 0.05);
-      $("#title").css("font-size", (windowH - 200)/14);
+      $("#title").css("font-size", (windowH - 200)/12.5);
       $("#hash").css("margin-top", (windowH - 200) * 0.18);
       $("#hash").css("font-size", (windowH - 200)/40);
       $("#score").css("margin-top", (windowH - 200)* 0.35);
