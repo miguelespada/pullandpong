@@ -106,6 +106,9 @@
 
     $("#container").width(windowW - 200);
     $("#container").height(windowH - 200);
+    $(".btn").css("padding", windowW/180);
+    $(".btn").css("margin-left", windowW/72);
+    $(".btn").css("margin-right", windowW/72);
 
     if (windowW <= windowH){
       $("#background").width(windowW - 200);
