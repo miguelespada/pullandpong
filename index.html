@@ -19,7 +19,7 @@
 
     text.countdown();
 
-    ball.init("#000000");
+    ball.init("#FFFFFF");
     setTimeout(function(){    
       CANVAS.addShape(ball.shape);
       ball.setInitialPosition(CANVAS.width/2, CANVAS.height/2);  
@@ -27,12 +27,12 @@
     }, 3000);
 
     left_bar = new bar();
-    left_bar.init("#000000", 1);
+    left_bar.init("#FFFFFF", 1);
     CANVAS.addShape(left_bar.shape);
     left_bar.setInitialPosition(25/CANVAS.stage.scaleX, CANVAS.height/2 - left_bar.height / CANVAS.stage.scaleY / 2);
 
     right_bar = new bar();
-    right_bar.init("#000000", 1);
+    right_bar.init("#FFFFFF", 1);
     CANVAS.addShape(right_bar.shape);
     right_bar.setInitialPosition(CANVAS.width - right_bar.width/CANVAS.stage.scaleX - 25/CANVAS.stage.scaleX, CANVAS.height/2 - right_bar.height / CANVAS.stage.scaleY / 2);
 
@@ -80,10 +80,20 @@
 </script>
 </head>
 <body onLoad="init();">
-  <img id="title" src="img/title.png" class="img-responsive">
   <div id="container"> 
-    <img id="background" width="1000" height="520" class="img-responsive" src="img/background.png">
-    <canvas id="doodle" width="1000" height="520" class="img-responsive"></canvas>
+    <img id="background" class="img-responsive" src="img/background.png">
+    <canvas id="doodle" width="1500" height="900" class="img-responsive"></canvas>
+    <script>
+      var windowW = $( window ).width();
+      var windowH = $( window ).height();
+
+      $("#container").width(windowW - 80);
+      $("#container").height(windowH - 80);
+
+      $("#doodle").width(windowW - 80);
+      $("#doodle").height(windowH - 80);
+
+    </script>
   </div>
   <div id="footer" class="responsive">
     <div id="recordtxt"><span>Record:</span><span id ="record"></span></div> 

@@ -1,7 +1,7 @@
 function bar(){
-  this.incY = 10;
-  this.width = 15;
-  this.height = 100;
+  this.incY = 20;
+  this.width = 20;
+  this.height = 200;
 
   this.init = function(color, dir){
     this.color = color;

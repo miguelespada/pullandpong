@@ -40,8 +40,8 @@ var CANVAS = new function(){
     this.containerWidth = document.getElementById("container").clientWidth;
     this.containerHeight = document.getElementById("container").clientHeight;
   
-    this.stageWidth = 1000;
-    this.stageHeight = 520;
+    this.stageWidth = 1500;
+    this.stageHeight = 900;
   
     this.stage.scaleX = this.stageWidth / this.containerWidth;
     this.stage.scaleY = this.stageHeight / this.containerHeight;

@@ -1,5 +1,10 @@
 body{
 	overflow: hidden;
+	background:#000000;
+}
+
+@font-face{
+
 }
 
 #title{
@@ -9,10 +14,11 @@ body{
 }
 
 #container{
+	background:#000000;
 	position: relative;
-	margin: 0 auto;
-	width: 1000px;
-	max-width:90%;
+	margin-left: 30px;
+	margin-top:30px;
+	border: 10px solid #00efd2;
 }
 
 #background{

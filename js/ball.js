@@ -1,6 +1,6 @@
 var ball = new function(){
 
-  this.radius = 15;
+  this.radius = 20;
 
   this.angleFactor = 2;
   this.acc = 1.1;
@@ -20,8 +20,8 @@ var ball = new function(){
   };
 
   this.setInitialSpeed = function(){
-    this.incX = 10/CANVAS.stage.scaleX;
-    this.incY = 10/CANVAS.stage.scaleY;
+    this.incX = 15/CANVAS.stage.scaleX;
+    this.incY = 15/CANVAS.stage.scaleY;
     this.dirX = -1;
     this.randomDirectionY();
   };
