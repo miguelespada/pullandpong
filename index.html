@@ -16,6 +16,7 @@
   var hashBoy = false;
   
   var init = function() {
+    windowSizing();
     CANVAS.init("doodle");
 
     ball.init("#feeda7");
@@ -96,6 +97,80 @@
     CANVAS.score = 0;
   }
 
+  var windowSizing = function(){
+    var windowW = $( window ).width();
+    var windowH = $( window ).height();
+
+    $("#container").width(windowW - 200);
+    $("#container").height(windowH - 200);
+
+    if (windowW <= windowH){
+      $("#background").width(windowW - 200);
+      $("#background").height(windowW - 200);
+      $("#background").css("margin-top", (windowH - windowW)/2);
+      $("#title").css("margin-top", (windowW - 200) * 0.08 + (windowH - windowW)/2);
+      $("#title").css("font-size", (windowW - 200)/12);
+      $("#hash").css("margin-top", (windowW - 200) * 0.22 + (windowH - windowW)/2);
+      $("#hash").css("font-size", (windowW - 200)/40);
+      $("#score").css("margin-top", (windowW - 200)* 0.35 + (windowH - windowW)/2);
+      $("#score").css("font-size", (windowW - 200)/4);
+      $("#record").css("margin-top", (windowW - 200)* 0.35 + (windowH - windowW)/2);
+      $("#record").css("font-size", (windowW - 200)/4);
+      $("#scoretxt").css("margin-top", (windowW - 200)* 0.6 + (windowH - windowW)/2);
+      $("#scoretxt").css("font-size", (windowW - 200)/40);
+      $("#recordtxt").css("margin-top", (windowW - 200)* 0.6 + (windowH - windowW)/2);
+      $("#recordtxt").css("font-size", (windowW - 200)/40);
+
+      $(".block").css("margin-left", 50);
+      $(".block").css("margin-top", (windowW - 200) * 0.37 + (windowH - windowW)/2);
+      $(".block").width(windowW - 300);
+      $(".block").height((windowW - 200)/4);
+      $(".indi").css("margin-top", (windowW - 200)/20);
+      $(".indi").css("font-size", (windowW - 200)/40);
+      $(".btn").css("font-size", (windowW - 200)/40);
+      $(".btn").css("margin-top", (windowW - 200)/7);
+    }
+    else {
+      $("#background").width(windowH - 200);
+      $("#background").height(windowH - 200);
+      $("#background").css("margin-left", (windowW - windowH)/2);
+      $("#title").css("margin-top", (windowH - 200) * 0.08);
+      $("#title").css("font-size", (windowH - 200)/12);
+      $("#hash").css("margin-top", (windowH - 200) * 0.22);
+      $("#hash").css("font-size", (windowH - 200)/40);
+      $("#score").css("margin-top", (windowH - 200)* 0.35);
+      $("#score").css("font-size", (windowH - 200)/4);
+      $("#record").css("margin-top", (windowH - 200)* 0.35);
+      $("#record").css("font-size", (windowH - 200)/4);
+      $("#scoretxt").css("margin-top", (windowH - 200)* 0.6);
+      $("#scoretxt").css("font-size", (windowH - 200)/40);
+      $("#recordtxt").css("margin-top", (windowH - 200)* 0.6);
+      $("#recordtxt").css("font-size", (windowH - 200)/40);
+
+      $(".block").css("margin-left", (windowW - windowH)/2 + 50);
+      $(".block").css("margin-top", (windowH - 200)* 0.37);
+      $(".block").width(windowH - 300);
+      $(".block").height((windowH - 200)/4);
+      $(".indi").css("margin-top", (windowH - 200)/20);
+      $(".indi").css("font-size", (windowH - 200)/40);
+      $(".btn").css("font-size", (windowH - 200)/40);
+      $(".btn").css("margin-top", (windowH - 200)/7);
+    }
+
+    $("#doodle").width(windowW - 200);
+    $("#doodle").height(windowH - 200);
+
+    $("#score").width(windowW/2 - 100);
+    $("#record").width(windowW/2 - 100);
+
+    $("#scoretxt").width(windowW/2 - 100);
+    $("#recordtxt").width(windowW/2 - 100);
+  }
+
+  window.onresize = function(){
+    windowSizing();
+  }
+
 </script>
 </head>
 <body onLoad="init();">
@@ -111,7 +186,7 @@
     </div>
     <canvas id="doodle" width="1500" height="900"></canvas>
     <div id="block1" class="block">
-      <div id="indi1" class="indi">Usa las teclas de dirección para jugar</div>
+      <div id="indi1" class="indi">Usa las flechas del teclado para jugar</div>
       <button id="start" type="button" class="btn" onclick="startGame();">EMPEZAR</button>
     </div>
     <div id="block2" class="block">
@@ -124,74 +199,6 @@
       <button id="restart3" type="button" class="btn" onclick="startGame();">JUGAR OTRA VEZ</button>
       <button id="share3" type="button" class="btn" onclick="window.location.href='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F95.85.12.111%2Fpullandpong'">COMPARTIR</button>
     </div>
-    <script>
-      var windowW = $( window ).width();
-      var windowH = $( window ).height();
-
-      $("#container").width(windowW - 200);
-      $("#container").height(windowH - 200);
-
-      if (windowW <= windowH){
-        $("#background").width(windowW - 200);
-        $("#background").css("margin-top", (windowH - windowW)/2);
-        $("#title").css("margin-top", (windowW - 200) * 0.08 + (windowH - windowW)/2);
-        $("#title").css("font-size", (windowW - 200)/12);
-        $("#hash").css("margin-top", (windowW - 200) * 0.22 + (windowH - windowW)/2);
-        $("#hash").css("font-size", (windowW - 200)/40);
-        $("#score").css("margin-top", (windowW - 200)* 0.35 + (windowH - windowW)/2);
-        $("#score").css("font-size", (windowW - 200)/4);
-        $("#record").css("margin-top", (windowW - 200)* 0.35 + (windowH - windowW)/2);
-        $("#record").css("font-size", (windowW - 200)/4);
-        $("#scoretxt").css("margin-top", (windowW - 200)* 0.6 + (windowH - windowW)/2);
-        $("#scoretxt").css("font-size", (windowW - 200)/40);
-        $("#recordtxt").css("margin-top", (windowW - 200)* 0.6 + (windowH - windowW)/2);
-        $("#recordtxt").css("font-size", (windowW - 200)/40);
-
-        $(".block").css("margin-left", 50);
-        $(".block").css("margin-top", (windowW - 200) * 0.37 + (windowH - windowW)/2);
-        $(".block").width(windowW - 300);
-        $(".block").height((windowW - 200)/4);
-        $(".indi").css("margin-top", (windowW - 200)/20);
-        $(".indi").css("font-size", (windowW - 200)/40);
-        $(".btn").css("font-size", (windowW - 200)/40);
-        $(".btn").css("margin-top", (windowW - 200)/7);
-      }
-      else {
-        $("#background").height(windowH - 200);
-        $("#background").css("margin-left", (windowW - windowH)/2);
-        $("#title").css("margin-top", (windowH - 200) * 0.08);
-        $("#title").css("font-size", (windowH - 200)/12);
-        $("#hash").css("margin-top", (windowH - 200) * 0.22);
-        $("#hash").css("font-size", (windowH - 200)/40);
-        $("#score").css("margin-top", (windowH - 200)* 0.35);
-        $("#score").css("font-size", (windowH - 200)/4);
-        $("#record").css("margin-top", (windowH - 200)* 0.35);
-        $("#record").css("font-size", (windowH - 200)/4);
-        $("#scoretxt").css("margin-top", (windowH - 200)* 0.6);
-        $("#scoretxt").css("font-size", (windowH - 200)/40);
-        $("#recordtxt").css("margin-top", (windowH - 200)* 0.6);
-        $("#recordtxt").css("font-size", (windowH - 200)/40);
-
-        $(".block").css("margin-left", (windowW - windowH)/2 + 50);
-        $(".block").css("margin-top", (windowH - 200)* 0.37);
-        $(".block").width(windowH - 300);
-        $(".block").height((windowH - 200)/4);
-        $(".indi").css("margin-top", (windowH - 200)/20);
-        $(".indi").css("font-size", (windowH - 200)/40);
-        $(".btn").css("font-size", (windowH - 200)/40);
-        $(".btn").css("margin-top", (windowH - 200)/7);
-      }
-
-      $("#doodle").width(windowW - 200);
-      $("#doodle").height(windowH - 200);
-
-      $("#score").width(windowW/2 - 100);
-      $("#record").width(windowW/2 - 100);
-
-      $("#scoretxt").width(windowW/2 - 100);
-      $("#recordtxt").width(windowW/2 - 100);
-
-    </script>
   </div>
 </body>
 </html>
