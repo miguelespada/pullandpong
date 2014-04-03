@@ -81,17 +81,27 @@
 </head>
 <body onLoad="init();">
   <div id="container"> 
-    <img id="background" class="img-responsive" src="img/background.png">
-    <canvas id="doodle" width="1500" height="900" class="img-responsive"></canvas>
+    <img id="background" src="img/background.png">
+    <canvas id="doodle" width="1500" height="900"></canvas>
     <script>
       var windowW = $( window ).width();
       var windowH = $( window ).height();
 
-      $("#container").width(windowW - 80);
-      $("#container").height(windowH - 80);
+      $("#container").width(windowW - 200);
+      $("#container").height(windowH - 200);
 
-      $("#doodle").width(windowW - 80);
-      $("#doodle").height(windowH - 80);
+
+      if ((windowW - 200) * 850 / 1280 <= windowH - 200){
+        $("#background").width(windowW - 200);
+        $("#background").css("margin-top", (windowH - 200 - $("#background").height())/2);
+      }
+      else {
+        $("#background").height(windowH - 200);
+        $("#background").css("margin-left", (windowW - 200 - $("#background").width())/2);
+      }
+
+      $("#doodle").width(windowW - 200);
+      $("#doodle").height(windowH - 200);
 
     </script>
   </div>
