@@ -13,13 +13,15 @@
   <script src="js/bar.js"></script>
   <script src="js/text.js"></script>
   <script>
+
+  var hashBoy = false;
   
   var init = function() {
     CANVAS.init("doodle");
 
     text.countdown();
 
-    ball.init("#FFFFFF");
+    ball.init("#feeda7");
     setTimeout(function(){    
       CANVAS.addShape(ball.shape);
       ball.setInitialPosition(CANVAS.width/2, CANVAS.height/2);  
@@ -27,12 +29,12 @@
     }, 3000);
 
     left_bar = new bar();
-    left_bar.init("#FFFFFF", 1);
+    left_bar.init("#c2aace", 1);
     CANVAS.addShape(left_bar.shape);
     left_bar.setInitialPosition(25/CANVAS.stage.scaleX, CANVAS.height/2 - left_bar.height / CANVAS.stage.scaleY / 2);
 
     right_bar = new bar();
-    right_bar.init("#FFFFFF", 1);
+    right_bar.init("#c2aace", 1);
     CANVAS.addShape(right_bar.shape);
     right_bar.setInitialPosition(CANVAS.width - right_bar.width/CANVAS.stage.scaleX - 25/CANVAS.stage.scaleX, CANVAS.height/2 - right_bar.height / CANVAS.stage.scaleY / 2);
 
@@ -42,6 +44,20 @@
     CANVAS.score = 0;
 
     addCallbacks();
+    setHash();
+  }
+
+  var setHash = function(){
+    setInterval(function(){
+      if (hashBoy){
+        $("#hash").html("hey #pullandbearboys");
+        hashBoy = false;
+      }
+      else if (!hashBoy){
+        $("#hash").html("hey #pullandbeargirls");
+        hashBoy = true;
+      }
+    }, 1000);
   }
 
   var setScore = function(){
@@ -83,6 +99,8 @@
   <div id="container"> 
     <img id="background" src="img/background.png">
     <canvas id="doodle" width="1500" height="900"></canvas>
+    <div id="title">ENTRA EN JUEGO</div>
+    <div id="hash">hey #pullandbearboys</div>
     <script>
       var windowW = $( window ).width();
       var windowH = $( window ).height();
@@ -90,14 +108,21 @@
       $("#container").width(windowW - 200);
       $("#container").height(windowH - 200);
 
-
-      if ((windowW - 200) * 850 / 1280 <= windowH - 200){
+      if (windowW <= windowH){
         $("#background").width(windowW - 200);
-        $("#background").css("margin-top", (windowH - 200 - $("#background").height())/2);
+        $("#background").css("margin-top", (windowH - windowW)/2);
+        $("#title").css("margin-top", (windowW - 200) * 0.08 + (windowH - windowW)/2);
+        $("#title").css("font-size", (windowW - 200)/12);
+        $("#hash").css("margin-top", (windowW - 200) * 0.22 + (windowH - windowW)/2);
+        $("#hash").css("font-size", (windowW - 200)/40);
       }
       else {
         $("#background").height(windowH - 200);
-        $("#background").css("margin-left", (windowW - 200 - $("#background").width())/2);
+        $("#background").css("margin-left", (windowW - windowH)/2);
+        $("#title").css("margin-top", (windowH - 200) * 0.08);
+        $("#title").css("font-size", (windowH - 200)/12);
+        $("#hash").css("margin-top", (windowH - 200) * 0.22);
+        $("#hash").css("font-size", (windowH - 200)/40);
       }
 
       $("#doodle").width(windowW - 200);

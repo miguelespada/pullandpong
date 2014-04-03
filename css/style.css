@@ -4,7 +4,13 @@ body{
 }
 
 @font-face{
+	font-family: Eco;
+	src: url(../font/ECOLOGIZE-FONT.ttf);
+}
 
+@font-face{
+	font-family: Mono;
+	src: url(../font/SimplonMono-Medium.ttf);
 }
 
 #title{
@@ -29,6 +35,24 @@ body{
 	position: absolute;
 	top:0px;
 	left:0px;
+}
+
+#title{
+	position:absolute;
+	top:0px;
+	font-family: Eco;
+	width: 100%;
+	text-align: center;
+	color: #00efd2;
+}
+
+#hash{
+	position:absolute;
+	top:0px;
+	font-family: Mono;
+	width: 100%;
+	text-align: center;
+	color: #00efd2;
 }
 
 #footer{
