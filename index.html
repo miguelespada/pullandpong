@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta property="og:image" content="img/thumbnail.jpg"/>
   <meta property="og:description"content="Entra en juego con Pull&Bear y comparte tu experiencia"/>
-  <title>Pull & Pong</title>
+  <title>Pull&Pong</title>
   <link rel="stylesheet" href="css/style.css"></link>
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
@@ -27,12 +27,12 @@
     left_bar = new bar();
     left_bar.init("#c2aace", 1);
     CANVAS.addShape(left_bar.shape);
-    left_bar.setInitialPosition(25/CANVAS.stage.scaleX, CANVAS.height/2 - left_bar.height / CANVAS.stage.scaleY / 2);
+    left_bar.setInitialPosition(50/CANVAS.stage.scaleX, CANVAS.height/2 - left_bar.height / CANVAS.stage.scaleY / 2);
 
     right_bar = new bar();
     right_bar.init("#c2aace", 1);
     CANVAS.addShape(right_bar.shape);
-    right_bar.setInitialPosition(CANVAS.width - right_bar.width/CANVAS.stage.scaleX - 25/CANVAS.stage.scaleX, CANVAS.height/2 - right_bar.height / CANVAS.stage.scaleY / 2);
+    right_bar.setInitialPosition(CANVAS.width - right_bar.width/CANVAS.stage.scaleX - 50/CANVAS.stage.scaleX, CANVAS.height/2 - right_bar.height / CANVAS.stage.scaleY / 2);
 
     CANVAS.addTouch();
 
@@ -111,8 +111,8 @@
       $("#background").width(windowW - 200);
       $("#background").height(windowW - 200);
       $("#background").css("margin-top", (windowH - windowW)/2);
-      $("#title").css("margin-top", (windowW - 200) * 0.08 + (windowH - windowW)/2);
-      $("#title").css("font-size", (windowW - 200)/12);
+      $("#title").css("margin-top", (windowW - 200) * 0.09 + (windowH - windowW)/2);
+      $("#title").css("font-size", (windowW - 200)/14);
       $("#hash").css("margin-top", (windowW - 200) * 0.22 + (windowH - windowW)/2);
       $("#hash").css("font-size", (windowW - 200)/40);
       $("#score").css("margin-top", (windowW - 200)* 0.35 + (windowH - windowW)/2);
@@ -137,8 +137,8 @@
       $("#background").width(windowH - 200);
       $("#background").height(windowH - 200);
       $("#background").css("margin-left", (windowW - windowH)/2);
-      $("#title").css("margin-top", (windowH - 200) * 0.08);
-      $("#title").css("font-size", (windowH - 200)/12);
+      $("#title").css("margin-top", (windowH - 200) * 0.09);
+      $("#title").css("font-size", (windowH - 200)/14);
       $("#hash").css("margin-top", (windowH - 200) * 0.22);
       $("#hash").css("font-size", (windowH - 200)/40);
       $("#score").css("margin-top", (windowH - 200)* 0.35);
@@ -196,12 +196,12 @@
       <button id="start" type="button" class="btn" onclick="startGame();">EMPEZAR</button>
     </div>
     <div id="block2" class="block">
-      <div id="indi2" class="indi">Bien jugado! Has conseguido <span id="score2"></span> puntos</div>
+      <div id="indi2" class="indi">¡Bien jugado! Has conseguido <span id="score2"></span> puntos</div>
       <button id="restart2" type="button" class="btn" onclick="startGame();">JUGAR OTRA VEZ</button>
       <button id="share2" type="button" class="btn" onclick="window.open( 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F95.85.12.111%2Fpongtest', '_blank' )">COMPARTIR</button>
     </div>
     <div id="block3" class="block">
-      <div id="indi3" class="indi">Felicidades! Tu nuevo récord está en <span id="record3"></span> puntos</div>
+      <div id="indi3" class="indi">¡Felicidades! Tu nuevo récord está en <span id="record3"></span> puntos</div>
       <button id="restart3" type="button" class="btn" onclick="startGame();">JUGAR OTRA VEZ</button>
       <button id="share3" type="button" class="btn" onclick="window.open( 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F95.85.12.111%2Fpongtest', '_blank' )">COMPARTIR</button>
     </div>

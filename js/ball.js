@@ -66,7 +66,7 @@ var ball = new function(){
   };
 
   this.bounce_left = function(CANVAS, bar){
-    if ((this.x - this.radius/CANVAS.stage.scaleX - 25/CANVAS.stage.scaleX ) <= (bar.width/CANVAS.stage.scaleX) && 
+    if ((this.x - this.radius/CANVAS.stage.scaleX - 50/CANVAS.stage.scaleX ) <= (bar.width/CANVAS.stage.scaleX) && 
         (this.offset(bar) >= 0 && this.offset(bar) <= bar.height/CANVAS.stage.scaleY)){
       this.hit(CANVAS, bar);
       return true;
@@ -75,7 +75,7 @@ var ball = new function(){
   };
 
   this.bounce_right = function(CANVAS, bar){
-    if ((this.x + this.radius/CANVAS.stage.scaleX + 25/CANVAS.stage.scaleX ) >= (CANVAS.width - bar.width/CANVAS.stage.scaleX) && 
+    if ((this.x + this.radius/CANVAS.stage.scaleX + 50/CANVAS.stage.scaleX ) >= (CANVAS.width - bar.width/CANVAS.stage.scaleX) && 
         (this.offset(bar) >= 0 && this.offset(bar) <= bar.height/CANVAS.stage.scaleY)){
       this.hit(CANVAS, bar);
       return true;
@@ -101,7 +101,7 @@ var ball = new function(){
   };
 
   this.isOut = function(CANVAS){
-    return this.x <= 25/CANVAS.stage.scaleX || (this.x - this.radius/CANVAS.stage.scaleX) > CANVAS.width - 25/CANVAS.stage.scaleX ;
+    return this.x <= 50/CANVAS.stage.scaleX || (this.x - this.radius/CANVAS.stage.scaleX) > CANVAS.width - 50/CANVAS.stage.scaleX ;
   };
 
   this.hide = function(){
