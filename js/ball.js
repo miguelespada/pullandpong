@@ -62,7 +62,7 @@ var ball = new function(){
 
     CANVAS.score += 1;
     this.incX *= this.acc;
-    if(this.incX > 25/CANVAS.stage.scaleX) this.incX = 25/CANVAS.stage.scaleX;
+    if(this.incX > 30/CANVAS.stage.scaleX) this.incX = 30/CANVAS.stage.scaleX;
   };
 
   this.bounce_left = function(CANVAS, bar){
