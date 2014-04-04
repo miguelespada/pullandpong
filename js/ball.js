@@ -59,7 +59,11 @@ var ball = new function(){
     
     // Add noise when chit on the center bar
     if(Math.abs(this.dirY) < 0.1) (this.dirY = Math.random() - 0.5) / 2;
-
+    else {
+      console.log(this.dirY);
+      this.dirY += (Math.random() - 0.5) / 4;
+      console.log(this.dirY);
+    }
     CANVAS.score += 1;
     this.incX *= this.acc;
     if(this.incX > 30/CANVAS.stage.scaleX) this.incX = 30/CANVAS.stage.scaleX;
