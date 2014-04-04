@@ -57,12 +57,10 @@ var ball = new function(){
     this.dirX *= -1;
     this.dirY = this.normalizedOffset(bar) * this.angleFactor;
     
-    // Add noise when chit on the center bar
+    // Add noise when hit on the center bar
     if(Math.abs(this.dirY) < 0.1) (this.dirY = Math.random() - 0.5) / 2;
     else {
-      console.log(this.dirY);
-      this.dirY += (Math.random() - 0.5) / 4;
-      console.log(this.dirY);
+        this.dirY += (Math.random() - 0.5) / 4;
     }
     CANVAS.score += 1;
     this.incX *= this.acc;
