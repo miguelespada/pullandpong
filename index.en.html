@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width; initial-scale=1.0, maximum-scale=1.0; user-scalable=0;">
+  <meta property="og:url" content="http://social.pullandbear.com/ballboys/"/>
+  <meta property="og:title" content="Pull&Pong"/>
+  <meta property="og:image" content="http://social.pullandbear.com/ballboys/img/thumbnail.jpg"/>
+  <meta property="og:description"content="Entra en juego con Pull&Bear y comparte tu experiencia"/>
+  <title>Pull&Pong</title>
+  <link rel="stylesheet" href="css/style.css"></link>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
+  <script src="http://code.createjs.com/tweenjs-0.5.1.min.js"></script>
+  <script src="js/ball.js"></script>
+  <script src="js/canvas.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/bar.js"></script>
+  <script src="js/text.en.js"></script>
+  <script>
+
+  var hashBoy = false;
+  
+  var init = function() {
+    windowSizing();
+    CANVAS.init("doodle");
+
+    ball.init("#feeda7");
+
+    left_bar = new bar();
+    left_bar.init("#c2aace", 1);
+    CANVAS.addShape(left_bar.shape);
+    left_bar.setInitialPosition(50/CANVAS.stage.scaleX, CANVAS.height/2 - left_bar.height / CANVAS.stage.scaleY / 2);
+
+    right_bar = new bar();
+    right_bar.init("#c2aace", 1);
+    CANVAS.addShape(right_bar.shape);
+    right_bar.setInitialPosition(CANVAS.width - right_bar.width/CANVAS.stage.scaleX - 50/CANVAS.stage.scaleX, CANVAS.height/2 - right_bar.height / CANVAS.stage.scaleY / 2);
+
+    CANVAS.addTouch();
+
+    CANVAS.record = 0;
+    CANVAS.score = 0;
+
+    addCallbacks();
+    setHash();
+  }
+
+  var setHash = function(){
+    setInterval(function(){
+      if (hashBoy){
+        $("#hash").html("hey #pullandbearboys");
+        hashBoy = false;
+      }
+      else if (!hashBoy){
+        $("#hash").html("hey #pullandbeargirls");
+        hashBoy = true;
+      }
+    }, 1000);
+  }
+
+  var setScore = function(){
+    $('#score').text(CANVAS.score);
+    $('#score2').text(CANVAS.score);
+    $('#record').text(CANVAS.record);
+    $('#record3').text(CANVAS.record);
+  }
+
+  var tick = function() {
+
+    left_bar.update(CANVAS);
+    left_bar.draw();
+
+    right_bar.update(CANVAS);
+    right_bar.draw();
+
+    ball.update(CANVAS, left_bar, right_bar);
+    ball.draw();  
+
+    CANVAS.update();
+    setScore();
+  };
+
+  var addCallbacks = function(){
+    document.onkeydown = handleKeyDown;
+    document.onkeyup = handleKeyUp;
+
+    CANVAS.stage.on("stagemousedown", function(event){mouseDown(event);});
+    CANVAS.stage.on("stagemousemove", function(event){mouseMove(event);});
+    CANVAS.stage.on("stagemouseup", function(event){mouseUp(event);});
+    document.onmouseup = mouseUp;
+
+    createjs.Ticker.setFPS(30);
+    createjs.Ticker.addEventListener("tick", tick);
+  };
+
+  var startGame = function(){
+    $(".block").hide();
+    $("#puntos").show();
+    CANVAS.addShape(ball.shape);
+    ball.setInitialPosition(CANVAS.width/2, CANVAS.height/2);
+    ball.setInitialSpeed();
+    CANVAS.score = 0;
+  }
+
+  var windowSizing = function(){
+    var windowW = $( window ).width();
+    var windowH = $( window ).height();
+
+    $("#container").width(windowW - 200);
+    $("#container").height(windowH - 200);
+    $(".btn").css("padding-left", windowW/180);
+    $(".btn").css("padding-right", windowW/180);
+    $(".btn").css("padding-top", windowW/180 + 2);
+    $(".btn").css("padding-bottom", windowW/180 - 2);
+    $(".btn").css("margin-left", windowW/72);
+    $(".btn").css("margin-right", windowW/72);
+
+    if (windowW <= windowH){
+      $("#background").width(windowW - 200);
+      $("#background").height(windowW - 200);
+      $("#background").css("margin-top", (windowH - windowW)/2);
+      $("#title").css("margin-top", (windowW - 200) * 0.06 + (windowH - windowW)/2);
+      $("#title").css("font-size", (windowW - 200)/12.5);
+      $("#hash").css("margin-top", (windowW - 200) * 0.19 + (windowH - windowW)/2);
+      $("#hash").css("font-size", (windowW - 200)/40);
+      $("#score").css("margin-top", (windowW - 200)* 0.35 + (windowH - windowW)/2);
+      $("#score").css("font-size", (windowW - 200)/4);
+      $("#record").css("margin-top", (windowW - 200)* 0.35 + (windowH - windowW)/2);
+      $("#record").css("font-size", (windowW - 200)/4);
+      $("#scoretxt").css("margin-top", (windowW - 200)* 0.6 + (windowH - windowW)/2);
+      $("#scoretxt").css("font-size", (windowW - 200)/40);
+      $("#recordtxt").css("margin-top", (windowW - 200)* 0.6 + (windowH - windowW)/2);
+      $("#recordtxt").css("font-size", (windowW - 200)/40);
+
+      $(".block").css("margin-left", 50);
+      $(".block").css("margin-top", (windowW - 200) * 0.37 + (windowH - windowW)/2);
+      $(".block").width(windowW - 300);
+      $(".block").height((windowW - 200)/4);
+      $(".indi").css("margin-top", (windowW - 200)/20);
+      $(".indi").css("font-size", (windowW - 200)/40);
+      $(".btn").css("font-size", (windowW - 200)/40);
+      $(".btn").css("margin-top", (windowW - 200)/7);
+    }
+    else {
+      $("#background").width(windowH - 200);
+      $("#background").height(windowH - 200);
+      $("#background").css("margin-left", (windowW - windowH)/2);
+      $("#title").css("margin-top", (windowH - 200) * 0.06);
+      $("#title").css("font-size", (windowH - 200)/12.5);
+      $("#hash").css("margin-top", (windowH - 200) * 0.19);
+      $("#hash").css("font-size", (windowH - 200)/40);
+      $("#score").css("margin-top", (windowH - 200)* 0.35);
+      $("#score").css("font-size", (windowH - 200)/4);
+      $("#record").css("margin-top", (windowH - 200)* 0.35);
+      $("#record").css("font-size", (windowH - 200)/4);
+      $("#scoretxt").css("margin-top", (windowH - 200)* 0.6);
+      $("#scoretxt").css("font-size", (windowH - 200)/40);
+      $("#recordtxt").css("margin-top", (windowH - 200)* 0.6);
+      $("#recordtxt").css("font-size", (windowH - 200)/40);
+
+      $(".block").css("margin-left", (windowW - windowH)/2 + 50);
+      $(".block").css("margin-top", (windowH - 200)* 0.37);
+      $(".block").width(windowH - 300);
+      $(".block").height((windowH - 200)/4);
+      $(".indi").css("margin-top", (windowH - 200)/20);
+      $(".indi").css("font-size", (windowH - 200)/40);
+      $(".btn").css("font-size", (windowH - 200)/40);
+      $(".btn").css("margin-top", (windowH - 200)/7);
+    }
+
+    $("#doodle").width(windowW - 200);
+    $("#doodle").height(windowH - 200);
+
+    $("#score").width(windowW/2 - 100);
+    $("#record").width(windowW/2 - 100);
+
+    $("#scoretxt").width(windowW/2 - 100);
+    $("#recordtxt").width(windowW/2 - 100);
+  }
+
+  var resizeTimeout;
+  window.onresize = function(){
+    windowSizing();
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(function(){window.location.reload();}, 100);
+  };
+
+  var shareButton = function(){
+    window.open('https://www.facebook.com/sharer/sharer.php?u=http://social.pullandbear.com/ballboys/', '_blank');
+  };
+
+</script>
+</head>
+<body onLoad="init();">
+  <div id="container"> 
+    <img id="background" src="img/background.png">    
+    <div id="title">PULL&PONG</div>
+    <div id="hash">hey #pullandbearboys</div>
+    <div id="puntos">
+      <span id="score"></span>
+      <span id="record"></span>
+      <div id="scoretxt">SCORE</div>
+      <div id="recordtxt">YOUR HIGH SCORE</div>
+    </div>
+    <canvas id="doodle" width="1500" height="900"></canvas>
+    <div id="block1" class="block">
+      <div id="indi1" class="indi">Use the keyboard arrows to play</div>
+      <button id="start" type="button" class="btn" onclick="startGame();">START</button>
+    </div>
+    <div id="block2" class="block">
+      <div id="indi2" class="indi">Well done! Your score was <span id="score2"></span> points</div>
+      <button id="restart2" type="button" class="btn" onclick="startGame();">PLAY AGAIN</button>
+      <button id="share2" type="button" class="btn" onclick="shareButton();">SHARE</button>
+    </div>
+    <div id="block3" class="block">
+      <div id="indi3" class="indi">Congrats! Your new high score is <span id="record3"></span> points</div>
+      <button id="restart3" type="button" class="btn" onclick="startGame();">PLAY AGAIN</button>
+      <button id="share3" type="button" class="btn" onclick="shareButton();">SHARE</button>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,9 +1,9 @@
 var text = new function(){
   this.newrecord = function(){
-    $("#title").html("NUEVO RECORD");
+    $("#title").html("NEW HIGH SCORE");
   };
 
   this.entergame = function(){
-    $("#title").html("ENTRA EN JUEGO");
+    $("#title").html("PULL&PONG");
   };
 };
